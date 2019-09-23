@@ -1,75 +1,119 @@
-
-<!-- 待写页面，这里是乱写的测试内容 -->
 <template>
 	<el-container>
-    	<el-header height="100px">
-			<h1>后台管理系统</h1>
-		</el-header>
 		<el-main>
-
+			<el-form :model="user" :rules="rules" hide-required-asterisk ref="user">
+				<h2>商户管理系统</h2>
+				<el-divider></el-divider>
+				<el-form-item label="账号:" prop="name">
+					<el-input v-model="user.name" placeholder=" " ></el-input>
+				</el-form-item>
+				<el-form-item label="密码:" prop="password">
+					<el-input v-model="user.password" placeholder=" " type="password"></el-input>
+				</el-form-item>
+				<el-form-item>
+					<el-button type="primary" @click="login('user')">登录</el-button>
+				</el-form-item>
+			</el-form>
 		</el-main>
 	</el-container>
+
 </template>
 <script>
 	export default {
 		name: 'Login',
 		data () {
 			return {
-
-				formInline:{
-					MessageTo:"",
-					date1:"",
-					date2:""
+				
+				user:{
+					name:"",
+					password:"",
 				},
-				tableData: [{
-					MessageTo:"1312000000",
-					sendTime:"2019-12-20 10:00:20",
-				},{
-					MessageTo:"1312000000",
-					sendTime:"2019-12-20 10:00:20",
-				}]
+				rules:{
+					name:[{required:true, message:'请输入账户', trigger:'blur'}],
+					password:[{required:true, message:'请输入密码', trigger:'blur'}]
+				}
 			}
 		},
 		methods: {
 
-			handleEdit(index, row) {
-				console.log(row);
-			},
-
-			handleSelectionChange(val) {
-				console.log(val);
-				this.multipleSelection = val;
-			},
-			linkToMessageHistory(key,keyPath) {
-				console.log(key);
-			},
-			submitForm(){
-
+			login(formName){
+				let _this=this;
+				this.$refs[formName].validate((valid) => {
+					if (valid) {
+						this.$axios.post('/api/check_account',this.user).then(res=>{ 
+							console.log(res);
+						}).catch(err=>{alert("no")});
+					} else {
+						return false;
+					}
+				});
+				// this.$axios.get('/api/get_all_info')
+				// .then(response => {console.log(response)})
+				// .catch(function (error) { 
+				// 	console.log(error);
+				// });
+				
+				
 			}
 		}
 	}
+	
 </script>
-<style>
-	body{
-		margin: 0px;
-	}
-	.el-mian-from{
-		padding: 20px 20px 10px 20px;
-	}
-	.el-mian-table {
-		margin: 0px auto;
-		padding: 0px 20px 20px 20px;
-	}
-	.el-header {
-		background-color:  #808080;
-		color: #333;
-		line-height: 60px;
-	}
+<style scoped>
+.el-form{
+	border: 10px solid #b9c1d2;
+	width: 400px;
+	margin: 180px auto;
+	padding: 0px 20px 15px 20px;
+	-webkit-border-radius: 8px;
+	box-shadow: -16px 20px 20px 3px #909399;
+}
+.el-divider{
+	margin: 10px 0 10px 0;
+	background-color: #3a4f80;
+}
+.el-form>>>button.el-button.el-button--primary{
+	margin-left: 0px;
+	margin-top:20px;
+	padding-right: 180px;
+	padding-left: 180px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.el-form>>>.el-form-item{
+	padding-bottom: 2px;
+	margin-bottom: 10px;
+}
+.el-form>>>.el-form-item__label{
+	font-size: 20px;
+}
 
-  /*.el-aside {
-    background-color: rgb(238, 241, 246);
-    text-align: center;
-    line-height: 60px;
-    height: 800px;
-    }*/
+.el-form>>>.el-input__inner{
+	font-size: 18px;
+}
+.el-form>>>span{
+	font-size: 20px;
+}
+</style>
+<style>
+
+h2{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+body{
+	margin: 0px;
+}
+.el-mian-from{
+	padding: 20px 20px 10px 20px;
+}
+.el-mian-table {
+	margin: 0px auto;
+	padding: 0px 20px 20px 20px;
+}
+.el-header {
+	background-color:  #808080;
+	color: #333;
+	line-height: 60px;
+}
 </style>

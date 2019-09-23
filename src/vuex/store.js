@@ -8,7 +8,7 @@ const state = {
     EditJudge: false,
     AddJudge:false,
     allowBack:false,
-    tableDate:[]   //这个是解决不了父子路由那里无法触发事件，想在这里统一一下数据来达到目的
+    Authorization: localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : ''
 }
 const mutations = {
 	FixEditJudge(state){
@@ -22,7 +22,11 @@ const mutations = {
 	},
 	updateAllowBack(state){
 		state.allowBack=!state.allowBack;
-	}
+	},
+	changeLogin (state, user) {
+      state.Authorization = user.Authorization;
+      localStorage.setItem('Authorization', user.Authorization);
+    }
 }
 
 export default new Vuex.Store({

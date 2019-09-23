@@ -56,17 +56,23 @@ const router = new Router({
  mode:'history'
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.login_required) {
-//     next();
-//   } else {
-//     if(to.path=='/Login'){ 		//如果是登录页面路径，就直接next()
-//       next();
-//         } else { 					//不然就跳转到登录；
-//           next('/Login');
-//         }
-//       }
-//     });
+router.beforeEach((to, from, next) => {
+  if (to.meta.login_required) {
+    next();
+  } else {
+    if(to.path=='/Login'){ 		//如果是登录页面路径，就直接next()
+      next();
+    } else {
+     let token = localStorage.getItem('Authorization');
+
+     if (token === 'null' || token === '') {
+      next('/Login');
+    } else {
+      next();
+    }
+  }
+}
+});
 
 // router.beforeEach((to, from, next) => {
 //   console.log(to.path)

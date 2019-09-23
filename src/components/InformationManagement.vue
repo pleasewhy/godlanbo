@@ -110,7 +110,7 @@
     },
     data () {
      return {
-      
+
       tableDateRowIndex:0,
       formInline:{
         keyword:"",
@@ -147,38 +147,38 @@
     }
   },
   methods: {
-      getDateTime(){
-        var d=new Date();
-        var year=d.getFullYear();
-        var month=d.getMonth()+1;
-        var day=d.getDate();
-        var hour=d.getHours();
-        var minutes=d.getMinutes();
-        var sec=d.getSeconds();
-        if(minutes<10)
-          minutes='0'+minutes;
-        if(sec<10)
-          sec='0'+sec;
-        if(month<10)
-          month='0'+month;
-        if(day<10)
-          day='0'+day;
-        return year+'-'+month+'-'+day+' '+hour+':'+minutes+':'+sec;
-      },
-      updateform(obj,index){
-        obj.fixTime=this.getDateTime();
-        this.tableData[index]=obj;
-        
-      },
-      addInformationToform(obj){
-        obj.fixTime=this.getDateTime();
-        this.tableData[this.tableData.length]=obj;
-        
-      },
-      handleEdit(index, row) {//跳入子路由
-        this.tableDateRowIndex=index;
-        this.$store.commit('FixMainJudge');
-        this.$store.commit('FixEditJudge');//修改判断条件此时收起父路由显示的页面
+    getDateTime(){
+      var d=new Date();
+      var year=d.getFullYear();
+      var month=d.getMonth()+1;
+      var day=d.getDate();
+      var hour=d.getHours();
+      var minutes=d.getMinutes();
+      var sec=d.getSeconds();
+      if(minutes<10)
+        minutes='0'+minutes;
+      if(sec<10)
+        sec='0'+sec;
+      if(month<10)
+        month='0'+month;
+      if(day<10)
+        day='0'+day;
+      return year+'-'+month+'-'+day+' '+hour+':'+minutes+':'+sec;
+    },
+    updateform(obj,index){
+      obj.fixTime=this.getDateTime();
+      this.tableData[index]=obj;
+
+    },
+    addInformationToform(obj){
+      obj.fixTime=this.getDateTime();
+      this.tableData[this.tableData.length]=obj;
+
+    },
+    handleEdit(index, row) {
+      this.tableDateRowIndex=index;
+        this.$store.commit('FixMainJudge');//修改判断条件此时收起父路由显示的页面
+        this.$store.commit('FixEditJudge');
         
       },
       addInformation(){
@@ -219,8 +219,8 @@
     },
 
     watch :{
-      
-      
+
+
     }
     // mounted () {
     // this.$axios.get('/ ')
@@ -232,30 +232,33 @@
   };
 </script>
 <style>
-  body{
-    margin: 0px;
-  }
-  .el-mian-from{
-    padding: 20px 20px 10px 20px;
-  }
-  .el-mian-table {
-    margin: 0px auto;
-    padding: 0px 20px 20px 20px;
-  }
-  .el-header {
-    background-color:  #808080;
-    color: #333;
-    line-height: 60px;
-  }
-  
-  .el-aside {
-    background-color: rgb(238, 241, 246);
-    text-align: center;
-    line-height: 60px;
-    height: 800px;
-  }
-  
-  
+body{
+  margin: 0px;
+}
+.el-mian-from{
+  padding: 20px 20px 10px 20px;
+}
+.el-mian-table {
+  margin: 0px auto;
+  padding: 0px 20px 20px 20px;
+}
+.el-main{
+  margin-top: 10px;
+}
+.el-header {
+  background-color:  #808080;
+  color: #333;
+  line-height: 60px;
+}
+
+.el-aside {
+  background-color: rgb(238, 241, 246);
+  text-align: center;
+  line-height: 60px;
+  height: 800px;
+}
+
+
 
 </style>
 

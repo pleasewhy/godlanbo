@@ -1,26 +1,5 @@
 <template>
-  <div id="app">
-    <el-container>
-      <el-header height="100px">
-        <h1>后台管理系统</h1>
-      </el-header>
-
-      <el-container>
-
-        <el-aside width="200px">
-          <!-- <i class="el-icon-s-home">&nbsp;首页</i> -->
-          <el-menu router :default-active="defaultActive"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-
-            <el-menu-item index="/InformationManagement">商户信息管理</el-menu-item>
-            <el-menu-item index="/Message">短信群发管理</el-menu-item>
-            <el-menu-item index="/MessageHistory">短信群发历史</el-menu-item>
-          </el-menu>
-        </el-aside>
-        <router-view></router-view>
-      </el-container>
-    </el-container>
-    
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>

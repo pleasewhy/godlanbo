@@ -1,6 +1,6 @@
 <template>
 	<el-main>
-		<span>编辑商户信息</span>
+		<span>新增商户信息</span>
 		<el-divider></el-divider>
 
 		<el-form :model="formInline" label-width="80px">
@@ -29,9 +29,6 @@
 				</el-select>
 			</el-form-item>
 			<el-form-item label="渠道:" >
-
-				<!-- <el-input v-model="formInline.path" placeholder=" "></el-input> -->
-
 
 				<el-select v-model="formInline.path" placeholder="请选择" style="width: 93%;">
 					<el-option label="美团" value="美团"></el-option>
