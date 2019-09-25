@@ -29,10 +29,6 @@
 				</el-select>
 			</el-form-item>
 			<el-form-item label="渠道:" >
-
-				<!-- <el-input v-model="formInline.path" placeholder=" "></el-input> -->
-
-
 				<el-select v-model="formInline.path" placeholder="请选择" style="width: 93%;">
 					<el-option label="美团" value="美团"></el-option>
 					<el-option label="饿了么" value="饿了么"></el-option>
@@ -75,22 +71,18 @@
 
 			}
 		},
-		created(){
-    	// this.$store.commit('mutationsFixBreakJudge');
-    	//console.log(this.$route.path);
-    },
-    methods: {
-    	save_edit(){
-    		this.$confirm('是否保存?', '提示', {
-    			confirmButtonText: '确定',
-    			cancelButtonText: '取消',
-    			type: 'warning'
-    		}).then(() => {
-    			this.$emit('save_edit',this.formInline,this.id);
-    			this.$message({
-    				type: 'success',
-    				message: '保存成功!'
-    			});
+		methods: {
+			save_edit(){
+				this.$confirm('是否保存?', '提示', {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					this.$emit('save_edit',this.formInline,this.id);
+					this.$message({
+						type: 'success',
+						message: '保存成功!'
+					});
     			// this.$store.commit('updateAllowBack')
     			this.$store.commit('FixMainJudge')
     			this.$store.commit('FixEditJudge')

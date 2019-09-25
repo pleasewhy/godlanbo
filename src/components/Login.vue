@@ -4,14 +4,15 @@
 			<el-form :model="user" :rules="rules" hide-required-asterisk ref="user">
 				<h2>商户管理系统</h2>
 				<el-divider></el-divider>
-				<el-form-item label="账号:" prop="name">
-					<el-input v-model="user.name" placeholder=" " ></el-input>
+				<el-form-item label="账号:" prop="username">
+					<el-input v-model="user.username" placeholder=" " ></el-input>
 				</el-form-item>
 				<el-form-item label="密码:" prop="password">
 					<el-input v-model="user.password" placeholder=" " type="password"></el-input>
 				</el-form-item>
 				<el-form-item>
 					<el-button type="primary" @click="login('user')">登录</el-button>
+					<el-button @click="test">test</el-button>
 				</el-form-item>
 			</el-form>
 		</el-main>
@@ -19,17 +20,18 @@
 
 </template>
 <script>
+
 	export default {
 		name: 'Login',
 		data () {
 			return {
 				
 				user:{
-					name:"",
+					username:"",
 					password:"",
 				},
 				rules:{
-					name:[{required:true, message:'请输入账户', trigger:'blur'}],
+					username:[{required:true, message:'请输入账户', trigger:'blur'}],
 					password:[{required:true, message:'请输入密码', trigger:'blur'}]
 				}
 			}
@@ -37,25 +39,46 @@
 		methods: {
 
 			login(formName){
-				let _this=this;
+				
+				// localStorage.clear();
+				
+				
+				
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						this.$axios.post('/api/check_account',this.user).then(res=>{ 
-							console.log(res);
-						}).catch(err=>{alert("no")});
+							console.log(res)
+							this.$router.replace({
+								path: '/Home',
+							})
+							// this.$store.commit('changeLogin',res.data.token);
+							// console.log(this.$store.state.token)
+							// console.log(localStorage.getItem('Authorization'));
+
+							// this.$router.push('/Home');
+						}).catch(err=>{alert("登陆失败")});
 					} else {
 						return false;
 					}
 				});
-				// this.$axios.get('/api/get_all_info')
-				// .then(response => {console.log(response)})
-				// .catch(function (error) { 
-				// 	console.log(error);
-				// });
 				
-				
+			},
+			test(){
+				this.$axios.get('/api/get_all_info')
+				.then(response => {console.log(response)})
+				.catch(function (error) { 
+					console.log(error);
+				});
 			}
+		},
+		mounted(){
+			history.pushState(null, null, document.URL);
+			window.addEventListener('popstate', function () {
+
+				history.pushState(null, null, document.URL);
+			});
 		}
+
 	}
 	
 </script>

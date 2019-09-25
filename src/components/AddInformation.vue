@@ -97,8 +97,6 @@
     				message: '取消保存'
     			});
     		});
-    		// this.$emit('save',this.formInline,this.$route.query.id);
-    		
     	},
     	cancel(){
     		this.$store.commit('FixAddJudge')

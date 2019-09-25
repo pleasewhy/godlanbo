@@ -1,47 +1,55 @@
 <template>
-  <div id="app">
+  <div id="Home">
     <el-container>
-  <el-header height="100px">
-    <h1>后台管理系统</h1>
-  </el-header>
+      <el-header height="100px">
+        <h1>后台管理系统</h1>
+      </el-header>
 
-  <el-container>
+      <el-container>
 
-    <el-aside width="200px">
-      <!-- <i class="el-icon-s-home">&nbsp;首页</i> -->
-      <el-menu router :default-active="defaultActive"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+        <el-aside width="200px">
+          <el-menu router :default-active="defaultActive"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
 
-        <el-menu-item index="/InformationManagement">商户信息管理</el-menu-item>
-        <el-menu-item index="/Message">短信群发管理</el-menu-item>
-        <el-menu-item index="/MessageHistory">短信群发历史</el-menu-item>
-      </el-menu>
-    </el-aside>
-    <router-view></router-view>
-  </el-container>
-</el-container>
+            <el-menu-item index="/InformationManagement">商户信息管理</el-menu-item>
+            <el-menu-item index="/Message">短信群发管理</el-menu-item>
+            <el-menu-item index="/MessageHistory">短信群发历史</el-menu-item>
+          </el-menu>
+        </el-aside>
+        <router-view></router-view>
+      </el-container>
+    </el-container>
     
   </div>
 </template>
- 
+
 <script>
-// 导入组件
+// import Message from './Message'
+// import MessageHistory from './MessageHistory'
+// import InformationManagement from './InformationManagement'
+// import EditInformation from './EditInformation'
 
 
 export default {
-  name: 'app',
+  name: 'Home',
   
 
   computed: {
-        defaultActive() {
-            return '/' + this.$route.path.split('/')[0];
-        }
+    defaultActive() {
+      return '/' + this.$route.path.split('/')[1];
     }
+  },
+  mounted(){
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL);
+    });
+  }
 }
 </script>
 <style type="text/css">
   body{
-  margin: 0px;
-}
+    margin: 0px;
+  }
   .el-header {
     background-color:  #808080;
     color: #333;

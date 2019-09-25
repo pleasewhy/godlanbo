@@ -22,17 +22,20 @@ const router = new Router({
     component: Home,
     meta:{
      login_required:false
-   }
+   },
+   chirdlen:[
+   {
+     path:'/Message',
+     name:'Message',
+     component:Message,
+     meta:{
+       login_required:false,
+       allowBack:false
+     }
+   },
+   ]
  },
- {
-   path:'/Message',
-   name:'Message',
-   component:Message,
-   meta:{
-     login_required:false,
-     allowBack:false
-   }
- },
+ 
  {
    path:'/MessageHistory',
    name:'MessageHistory',
@@ -56,23 +59,23 @@ const router = new Router({
  mode:'history'
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.login_required) {
-    next();
-  } else {
-    if(to.path=='/Login'){ 		//如果是登录页面路径，就直接next()
-      next();
-    } else {
-     let token = localStorage.getItem('Authorization');
-
-     if (token === 'null' || token === '') {
-      next('/Login');
-    } else {
-      next();
-    }
-  }
-}
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.meta.login_required) {
+//     next();
+//   } else {
+//     if(to.path=='/Login') {
+//       next();
+//     } else {
+//      let token = localStorage.getItem('Authorization');
+//      console.log(token)
+//      if (token === null || token === undefined) {
+//       next('/Login');
+//     } else {
+//       next();
+//     }
+//   }
+// }
+// });
 
 // router.beforeEach((to, from, next) => {
 //   console.log(to.path)
