@@ -25,7 +25,7 @@ const router = new Router({
    },
    chirdlen:[
    {
-     path:'Message',
+     path:'/Message',
      name:'Message',
      component:Message,
      meta:{
