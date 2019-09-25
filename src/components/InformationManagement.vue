@@ -209,7 +209,7 @@
       },
       sendMessage(){
       	if(this.multipleSelection.length==0){
-          // localStorage.clear()
+          localStorage.clear()
       		this.$alert("请勾选商户后再点击群发短信！","注意","确定");
       	}
       	else{
