@@ -1,5 +1,5 @@
 <template>
-  <div id="Home">
+  <div class="home">
     <el-container>
       <el-header height="100px">
         <h1>后台管理系统</h1>
@@ -10,29 +10,33 @@
         <el-aside width="200px">
           <el-menu router :default-active="defaultActive"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
 
-            <el-menu-item index="/InformationManagement">商户信息管理</el-menu-item>
-            <el-menu-item index="/Message">短信群发管理</el-menu-item>
-            <el-menu-item index="/MessageHistory">短信群发历史</el-menu-item>
+            <el-menu-item index="/Home/InformationManagement">商户信息管理</el-menu-item>
+            <el-menu-item index="/Home/Message">短信群发管理</el-menu-item>
+            <el-menu-item index="/Home/MessageHistory">短信群发历史</el-menu-item>
           </el-menu>
         </el-aside>
         <router-view></router-view>
       </el-container>
     </el-container>
-    
   </div>
 </template>
 
 <script>
-// import Message from './Message'
-// import MessageHistory from './MessageHistory'
-// import InformationManagement from './InformationManagement'
+import Message from './Message'
+import MessageHistory from './MessageHistory'
+import InformationManagement from './InformationManagement'
 // import EditInformation from './EditInformation'
 
 
 export default {
   name: 'Home',
+  components: {
+    Message,MessageHistory,InformationManagement
+  },
   
-
+  methods:{
+    
+  },
   computed: {
     defaultActive() {
       return '/' + this.$route.path.split('/')[1];

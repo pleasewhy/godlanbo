@@ -18,43 +18,41 @@ const router = new Router({
   },
   {
     path: '/Home',
-    name: 'Home',
+    // name: 'Home',
     component: Home,
     meta:{
      login_required:false
    },
    chirdlen:[
+   
    {
-     path:'/Message',
-     name:'Message',
+     path:'Message',
+     // name:'Message',
      component:Message,
      meta:{
        login_required:false,
-       allowBack:false
      }
-   },
+   },{
+     path:'MessageHistory',
+     // name:'MessageHistory',
+     component:MessageHistory,
+     meta:{
+       login_required:false,
+     }
+   },{
+     path:'InformationManagement',
+     // name:'InformationManagement',
+     component:InformationManagement,
+
+     meta:{
+       login_required:false,
+     }
+   }
    ]
  },
  
- {
-   path:'/MessageHistory',
-   name:'MessageHistory',
-   component:MessageHistory,
-   meta:{
-     login_required:false,
-     allowBack:false
-   }
- },
- {
-   path:'/InformationManagement',
-   name:'InformationManagement',
-   component:InformationManagement,
-   
-   meta:{
-     login_required:false,
-     allowBack:false
-   }
- }
+ 
+ 
  ],
  mode:'history'
 });
@@ -77,23 +75,10 @@ const router = new Router({
 // }
 // });
 
-// router.beforeEach((to, from, next) => {
-//   console.log(to.path)
-//   next()
-//   let allowBack = true    //    给个默认值true
-//   if (to.meta.allowBack !== undefined) {
-//     allowBack = to.meta.allowBack
-//   }
-//   if (!allowBack) {
-//       history.pushState(null, null, location.href)
-//   }    
-//   store.commit('updateAllowBack',allowBack)
-// });
-// router.beforeEach((to, from, next) => {
-//   if(!from.meta.allowBack)
-//     next(false)
-//   else
-//     next()
-// });
+router.beforeEach((to, from, next) => {
+  console.log(to)
+  console.log(from)
+  next()
+});
 
 export default router;

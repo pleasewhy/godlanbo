@@ -4,7 +4,7 @@
   <el-main v-if="$store.state.MainJudge">
 
 
-   <el-main-from>
+   
     <el-form :inline="true" :model="formInline">
       <el-form-item label="关键字">
         <el-input v-model="formInline.keyword" placeholder=" "></el-input>
@@ -43,9 +43,9 @@
       <el-button type="primary" @click="sendMessage">群发短信</el-button>
     </el-form-item>
   </el-form>
-</el-main-from>
 
-<el-main-table>
+
+
   <el-table  ref="multipleTable" :data="tableData"  height="610" @selection-change="handleSelectionChange" stripe>
     <el-table-column
     type="selection"
@@ -87,7 +87,7 @@
     </template>
   </el-table-column>
 </el-table>
-</el-main-table>
+
 
 </el-main>
 <el-main v-else-if="$store.state.EditJudge">
@@ -235,10 +235,10 @@
 body{
   margin: 0px;
 }
-.el-mian-from{
+.el-form{
   padding: 20px 20px 10px 20px;
 }
-.el-mian-table {
+.el-table {
   margin: 0px auto;
   padding: 0px 20px 20px 20px;
 }
@@ -257,9 +257,6 @@ body{
   line-height: 60px;
   height: 800px;
 }
-
-
-
 </style>
 
 

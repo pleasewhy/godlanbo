@@ -43,7 +43,7 @@
 				// localStorage.clear();
 				
 				
-				
+				// this.$router.push('/Home')
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
 						this.$axios.post('/api/check_account',this.user).then(res=>{ 
@@ -51,6 +51,7 @@
 							this.$router.replace({
 								path: '/Home',
 							})
+							// this.$router.push('/Home')
 							// this.$store.commit('changeLogin',res.data.token);
 							// console.log(this.$store.state.token)
 							// console.log(localStorage.getItem('Authorization'));
