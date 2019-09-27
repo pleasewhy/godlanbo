@@ -11,37 +11,27 @@ import Message from './components/Message'
 import MessageHistory from './components/MessageHistory'
 import InformationManagement from './components/InformationManagement'
 import EditInformation from './components/EditInformation'
-import Login from './components/Login'
 export default {
   name: 'app',
   components: {
-    Home,Message,MessageHistory,InformationManagement,EditInformation
-  },
-
-  computed: {
-    defaultActive() {
-      return '/' + this.$route.path.split('/')[1];
-    }
+    Home, Message, MessageHistory, InformationManagement, EditInformation
   }
-
 }
 
 </script>
 <style type="text/css">
-  body{
-    margin: 0px;
-  }
-  .el-header {
-    background-color:  #808080;
-    color: #333;
-    line-height: 60px;
-  }
-  
-  .el-aside {
-    background-color: rgb(238, 241, 246);
-    text-align: center;
-    line-height: 60px;
-    height: 800px;
-  }
-
+body{
+  margin: 0px;
+}
+.el-header {
+  background-color:  #808080;
+  color: #333;
+  line-height: 60px;
+}
+.el-aside {
+  background-color: rgb(238, 241, 246);
+  text-align: center;
+  line-height: 60px;
+  height: 800px;
+}
 </style>

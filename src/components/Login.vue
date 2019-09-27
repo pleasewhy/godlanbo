@@ -1,143 +1,124 @@
 <template>
-	<el-container>
-		<el-main>
-			<el-form :model="user" :rules="rules" hide-required-asterisk ref="user">
-				<h2>商户管理系统</h2>
-				<el-divider></el-divider>
-				<el-form-item label="账号:" prop="username">
-					<el-input v-model="user.username" placeholder=" " ></el-input>
-				</el-form-item>
-				<el-form-item label="密码:" prop="password">
-					<el-input v-model="user.password" placeholder=" " type="password"></el-input>
-				</el-form-item>
-				<el-form-item>
-					<el-button type="primary" @click="login('user')">登录</el-button>
-					<el-button @click="test">test</el-button>
-				</el-form-item>
-			</el-form>
-		</el-main>
-	</el-container>
+    <el-container>
+        <el-main>
+            <el-form :model="user" :rules="rules" hide-required-asterisk ref="user">
+                <h2>商户管理系统</h2>
+                <el-divider></el-divider>
+                <el-form-item label="账号:" prop="username">
+                    <el-input v-model="user.username" placeholder=" " ></el-input>
+                </el-form-item>
+                <el-form-item label="密码:" prop="password">
+                    <el-input v-model="user.password" placeholder=" " type="password"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="login('user')">登录</el-button>
+                    <el-button @click="test">test</el-button>
+                </el-form-item>
+            </el-form>
+        </el-main>
+    </el-container>
 
 </template>
 <script>
-
-	export default {
-		name: 'Login',
-		data () {
-			return {
-				
-				user:{
-					username:"",
-					password:"",
-				},
-				rules:{
-					username:[{required:true, message:'请输入账户', trigger:'blur'}],
-					password:[{required:true, message:'请输入密码', trigger:'blur'}]
-				}
-			}
-		},
-		methods: {
-
-			login(formName){
-				
-				// localStorage.clear();
-				
-				
-				// this.$router.push('/Home')
-				this.$refs[formName].validate((valid) => {
-					if (valid) {
-						this.$axios.post('/api/check_account',this.user).then(res=>{ 
-							console.log(res)
-							this.$router.replace({
-								path: '/Home',
-							})
-							// this.$router.push('/Home')
-							// this.$store.commit('changeLogin',res.data.token);
-							// console.log(this.$store.state.token)
-							// console.log(localStorage.getItem('Authorization'));
-
-							// this.$router.push('/Home');
-						}).catch(err=>{alert("登陆失败")});
-					} else {
-						return false;
-					}
-				});
-				
-			},
-			test(){
-				this.$axios.get('/api/get_all_info')
-				.then(response => {console.log(response)})
-				.catch(function (error) { 
-					console.log(error);
-				});
-			}
-		},
-		mounted(){
-			history.pushState(null, null, document.URL);
-			window.addEventListener('popstate', function () {
-
-				history.pushState(null, null, document.URL);
-			});
-		}
-
-	}
-	
+export default {
+  name: 'Login',
+  data () {
+    return {
+      user: {
+        username: '',
+        password: ''
+      },
+      rules: {
+        username: [{required: true, message: '请输入账户', trigger: 'blur'}],
+        password: [{required: true, message: '请输入密码', trigger: 'blur'}]
+      }
+    }
+  },
+  methods: {
+    login (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$axios.post('/api/check_account', this.user).then(res => {
+            console.log(res)
+            this.$router.replace({
+              path: '/Home'
+            })
+          }).catch(err => { alert('登陆失败'); console.log(err) })
+        } else {
+          return false
+        }
+      })
+    },
+    test () {
+      this.$axios.get('/api/get_all_info')
+        .then(response => { console.log(response) })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+  },
+  mounted () {
+    history.pushState(null, null, document.URL)
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL)
+    })
+  }
+}
 </script>
 <style scoped>
 .el-form{
-	border: 10px solid #b9c1d2;
-	width: 400px;
-	margin: 180px auto;
-	padding: 0px 20px 15px 20px;
-	-webkit-border-radius: 8px;
-	box-shadow: -16px 20px 20px 3px #909399;
+  border: 10px solid #b9c1d2;
+  width: 400px;
+  margin: 180px auto;
+  padding: 0px 20px 15px 20px;
+  -webkit-border-radius: 8px;
+  box-shadow: -16px 20px 20px 3px #909399;
 }
 .el-divider{
-	margin: 10px 0 10px 0;
-	background-color: #3a4f80;
+  margin: 10px 0 10px 0;
+  background-color: #3a4f80;
 }
 .el-form>>>button.el-button.el-button--primary{
-	margin-left: 0px;
-	margin-top:20px;
-	padding-right: 180px;
-	padding-left: 180px;
-	padding-top: 20px;
-	padding-bottom: 20px;
+  margin-left: 0px;
+  margin-top:20px;
+  padding-right: 180px;
+  padding-left: 180px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .el-form>>>.el-form-item{
-	padding-bottom: 2px;
-	margin-bottom: 10px;
+  padding-bottom: 2px;
+  margin-bottom: 10px;
 }
 .el-form>>>.el-form-item__label{
-	font-size: 20px;
+  font-size: 20px;
 }
 
 .el-form>>>.el-input__inner{
-	font-size: 18px;
+  font-size: 18px;
 }
 .el-form>>>span{
-	font-size: 20px;
+  font-size: 20px;
 }
 </style>
 <style>
-
 h2{
-	margin-top: 10px;
-	margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 body{
-	margin: 0px;
+  margin: 0px;
 }
 .el-mian-from{
-	padding: 20px 20px 10px 20px;
+  padding: 20px 20px 10px 20px;
 }
 .el-mian-table {
-	margin: 0px auto;
-	padding: 0px 20px 20px 20px;
+  margin: 0px auto;
+  padding: 0px 20px 20px 20px;
 }
 .el-header {
-	background-color:  #808080;
-	color: #333;
-	line-height: 60px;
+  background-color:  #808080;
+  color: #333;
+  line-height: 60px;
 }
 </style>

@@ -16,15 +16,12 @@ Vue.prototype.HOME = '/api'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
-
 // 请求拦截器
 axios.interceptors.request.use(
   config => {
-    
     if (store.state.token) {
       config.headers.Authorization = localStorage.getItem('Authorization')
     }
-    
     return config
   },
   err => {
@@ -33,24 +30,23 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
   response => {
-	if(response.headers.code==10010||response.headers.code==10011){
-		localStorage.setItem('Authorization',null)
-		router.replace({
-              path: '/Login',
-            })
-	  }else{
-	  	
-	  	store.commit('changeLogin',response.headers.authorization)
-	  	
-	  }
-	  return response
-	},
+    if (response.headers.code === 10010 || response.headers.code === 10011) {
+      localStorage.setItem('Authorization', null)
+      router.replace({
+        path: '/Login'
+      })
+    } else {
+      store.commit('changeLogin', response.headers.authorization)
+    }
+    return response
+  },
   error => {
-  	if(error.response.status==401)
-  		alert("Unauthorized access")
-  	else if(error.response.status==500)
-  		alert("服务器出错")
-    return Promise.reject(error.response.data)   
+    if (error.response.status === 401) {
+      alert('Unauthorized access')
+    } else if (error.response.status === 500) {
+      alert('服务器出错')
+    }
+    return Promise.reject(error.response.data)
   })
 
 /* eslint-disable no-new */

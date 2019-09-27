@@ -19,13 +19,22 @@ const mutations = {
   FixMainJudge (state) {
     state.MainJudge = !state.MainJudge
   },
-  changeLogin (state, user_token) {
-    localStorage.setItem('Authorization', user_token)
-    state.token=true
+  changeLogin (state, userToken) {
+    localStorage.setItem('Authorization', userToken)
+    state.token = true
   },
   removeLogin (state) {
-  	localStorage.setItem('Authorization',null)
-  	state.token=false
+    localStorage.setItem('Authorization', null)
+    state.token = false
+  },
+  InitializationMainJudge (state) {
+    state.MainJudge = true
+  },
+  InitializationEditJudge (state) {
+    state.EditJudge = false
+  },
+  InitializationAddJudge (state) {
+    state.AddJudge = false
   }
 }
 

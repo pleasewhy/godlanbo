@@ -1,10 +1,5 @@
-
 <template>
-
   <el-main v-if="$store.state.MainJudge">
-
-
-   
     <el-form :inline="true" :model="formInline">
       <el-form-item label="关键字">
         <el-input v-model="formInline.keyword" placeholder=" "></el-input>
@@ -34,8 +29,6 @@
           <el-time-picker placeholder="选择时间" v-model="formInline.date2" style="width: 100%;"></el-time-picker>
         </el-col>
       </el-form-item>
-    </br></br>
-
     <el-form-item>
       <el-button type="primary">查询</el-button>
       <el-button @click="addInformation">新增</el-button>
@@ -43,8 +36,6 @@
       <el-button type="primary" @click="sendMessage">群发短信</el-button>
     </el-form-item>
   </el-form>
-
-
 
   <el-table  ref="multipleTable" :data="tableData"  height="610" @selection-change="handleSelectionChange" stripe>
     <el-table-column
@@ -88,7 +79,6 @@
   </el-table-column>
 </el-table>
 
-
 </el-main>
 <el-main v-else-if="$store.state.EditJudge">
  <EditInformation @save_edit="updateform" :date="tableData[tableDateRowIndex]" :id="tableDateRowIndex"></EditInformation>
@@ -100,150 +90,141 @@
 </template>
 
 <script>
-  import EditInformation from './EditInformation.vue'
-  import AddInformation from './AddInformation.vue'
-  export default {
-
-    name: 'InformationManagement',
-    components: {
-      EditInformation,AddInformation
-    },
-    data () {
-     return {
-
-      tableDateRowIndex:0,
-      formInline:{
-        keyword:"",
-        infofrom:"",
-        path:"",
-        date1:"",
-        date2:""
+import EditInformation from './EditInformation.vue'
+import AddInformation from './AddInformation.vue'
+export default {
+  name: 'InformationManagement',
+  components: {
+    EditInformation, AddInformation
+  },
+  data () {
+    return {
+      tableDateRowIndex: 0,
+      formInline: {
+        keyword: '',
+        infofrom: '',
+        path: '',
+        date1: '',
+        date2: ''
       },
       tableData: [{
-        "name":"由睿婚礼策划",
-        "level":"五星好评",
-        "address":"新华街",
-        "linkAddress":"http://www.google.com",
-        "adminName":"张三",
-        "phonenumber":"13100000000",
-        "infofrom":"自动抓取",
-        "path":"美团",
-        "sp_info":"已经联系过一次",
-        "fixTime":"2019-12-20 10:00:20"
-      },{
-        "name":"由睿婚礼策划",
-        "level":"五星好评",
-        "address":"新华街",
-
-        "linkAddress":"http://www.google.com",
-        "adminName":"张三",
-        "phonenumber":"13100000000",
-        "infofrom":"自动抓取",
-        "path":"美团",
-        "sp_info":"已经联系过一次",
-        "fixTime":"2019-12-20 10:00:20"
+        'name': '由睿婚礼策划',
+        'level': '五星好评',
+        'address': '新华街',
+        'linkAddress': 'http://www.google.com',
+        'adminName': '张三',
+        'phonenumber': '13100000000',
+        'infofrom': '自动抓取',
+        'path': '美团',
+        'sp_info': '已经联系过一次',
+        'fixTime': '2019-12-20 10:00:20'
+      }, {
+        'name': '由睿婚礼策划',
+        'level': '五星好评',
+        'address': '新华街',
+        'linkAddress': 'http://www.google.com',
+        'adminName': '张三',
+        'phonenumber': '13100000000',
+        'infofrom': '自动抓取',
+        'path': '美团',
+        'sp_info': '已经联系过一次',
+        'fixTime': '2019-12-20 10:00:20'
       }],
-      multipleSelection: [],
+      multipleSelection: []
     }
   },
   methods: {
-    getDateTime(){
-      var d=new Date();
-      var year=d.getFullYear();
-      var month=d.getMonth()+1;
-      var day=d.getDate();
-      var hour=d.getHours();
-      var minutes=d.getMinutes();
-      var sec=d.getSeconds();
-      if(minutes<10)
-        minutes='0'+minutes;
-      if(sec<10)
-        sec='0'+sec;
-      if(month<10)
-        month='0'+month;
-      if(day<10)
-        day='0'+day;
-      return year+'-'+month+'-'+day+' '+hour+':'+minutes+':'+sec;
-    },
-    updateform(obj,index){
-      obj.fixTime=this.getDateTime();
-      this.tableData[index]=obj;
-
-    },
-    addInformationToform(obj){
-      obj.fixTime=this.getDateTime();
-      this.tableData[this.tableData.length]=obj;
-
-    },
-    handleEdit(index, row) {
-      this.tableDateRowIndex=index;
-        this.$store.commit('FixMainJudge');//修改判断条件此时收起父路由显示的页面
-        this.$store.commit('FixEditJudge');
-        
-      },
-      addInformation(){
-        this.$store.commit('FixMainJudge')
-        this.$store.commit('FixAddJudge');
-      },
-      handleDelete(index, row) {
-        this.$confirm('是否确认删除该用户信息?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-        	this.tableData.splice(index,1);
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
-      },
-      handleSelectionChange(val) {
-        console.log(val);
-        this.multipleSelection = val;
-      },
-      sendMessage(){
-      	if(this.multipleSelection.length==0){
-          localStorage.clear()
-      		this.$alert("请勾选商户后再点击群发短信！","注意","确定");
-      	}
-      	else{
-      		this.$alert("已选中"+this.multipleSelection.length+"个商户进行短信群发","发送成功","成功");
-      	}
+    getDateTime () {
+      var d = new Date()
+      var year = d.getFullYear()
+      var month = d.getMonth() + 1
+      var day = d.getDate()
+      var hour = d.getHours()
+      var minutes = d.getMinutes()
+      var sec = d.getSeconds()
+      if (minutes < 10) {
+        minutes = '0' + minutes
       }
+      if (sec < 10) {
+        sec = '0' + sec
+      }
+      if (month < 10) {
+        month = '0' + month
+      }
+      if (day < 10) {
+        day = '0' + day
+      }
+      return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + sec
     },
-
-    watch :{
-
-
+    updateform (obj, index) {
+      obj.fixTime = this.getDateTime()
+      this.tableData[index] = obj
+    },
+    addInformationToform (obj) {
+      obj.fixTime = this.getDateTime()
+      this.tableData[this.tableData.length] = obj
+    },
+    handleEdit (index, row) {
+      this.tableDateRowIndex = index
+      this.$store.commit('FixMainJudge')
+      this.$store.commit('FixEditJudge')
+    },
+    addInformation () {
+      this.$store.commit('FixMainJudge')
+      this.$store.commit('FixAddJudge')
+    },
+    handleDelete (index, row) {
+      this.$confirm('是否确认删除该用户信息?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.tableData.splice(index, 1)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    handleSelectionChange (val) {
+      console.log(val)
+      this.multipleSelection = val
+    },
+    sendMessage () {
+      if (this.multipleSelection.length === 0) {
+        localStorage.clear()
+        this.$alert('请勾选商户后再点击群发短信！', '注意', '确定')
+      } else {
+        this.$alert('已选中' + this.multipleSelection.length + '个商户进行短信群发', '发送成功', '成功')
+      }
     }
-    // mounted () {
-    // this.$axios.get('/ ')
-    //   .then(response => (this.info = response.data.name))
-    //   .catch(function (error) { 
-    //     console.log(error);
-    //   });
-    // }
-  };
+  },
+  created () {
+    this.$store.commit('InitializationMainJudge')
+    this.$store.commit('InitializationEditJudge')
+    this.$store.commit('InitializationAddJudge')
+  }
+}
 </script>
 <style>
 body{
   margin: 0px;
 }
 .el-form{
-  padding: 20px 20px 10px 20px;
+  padding: 10px 20px 10px 20px;
 }
 .el-table {
   margin: 0px auto;
-  padding: 0px 20px 20px 20px;
+  padding: 0px auto 20px auto;
 }
 .el-main{
   margin-top: 10px;
+  padding-top: 0px;
 }
 .el-header {
   background-color:  #808080;
@@ -258,6 +239,3 @@ body{
   height: 800px;
 }
 </style>
-
-
-
