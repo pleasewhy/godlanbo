@@ -2,7 +2,7 @@
   <el-main v-if="$store.state.MainJudge">
     <el-form :inline="true" :model="formInline">
       <el-form-item label="关键字">
-        <el-input v-model="formInline.keyword" placeholder=" "></el-input>
+        <el-input v-model="formInline.keyword" placeholder="相关信息"></el-input>
       </el-form-item>
       <el-form-item label="信息来源" label-width="100px">
         <el-select v-model="formInline.infofrom" placeholder="请选择">
@@ -39,45 +39,45 @@
 
   <el-table  ref="multipleTable" :data="tableData"  height="610" @selection-change="handleSelectionChange" stripe>
     <el-table-column
-    type="selection"
-    width="55">
-  </el-table-column>
-  <el-table-column prop="name" label="商户名称" width="120">
-  </el-table-column>
-  <el-table-column prop="level" label="质量评级" width="120">
-  </el-table-column>
-  <el-table-column prop="address" label="地址" width="120">
-  </el-table-column>
-  <el-table-column label="链接">
-    <template slot-scope="scope">
-      <a :href="''+tableData[scope.$index].linkAddress" target="_blank">{{tableData[scope.$index].linkAddress}}</a>
-    </template>
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column prop="name" label="商户名称" width="120">
+    </el-table-column>
+    <el-table-column prop="level" label="质量评级" width="120">
+    </el-table-column>
+    <el-table-column prop="address" label="地址" width="120">
+    </el-table-column>
+    <el-table-column label="链接">
+      <template slot-scope="scope">
+        <a :href="''+tableData[scope.$index].linkAddress" target="_blank">{{tableData[scope.$index].linkAddress}}</a>
+      </template>
 
-  </el-table-column>
-  <el-table-column prop="adminName" label="联系人">
-  </el-table-column>
-  <el-table-column prop="phonenumber" label="电话">
-  </el-table-column>
-  <el-table-column prop="infofrom" label="信息来源">
-  </el-table-column>
-  <el-table-column prop="path" label="渠道">
-  </el-table-column>
-  <el-table-column prop="sp_info" label="备注">
-  </el-table-column>
-  <el-table-column prop="fixTime" label="更新时间">
-  </el-table-column>
-  <el-table-column  label="操作">
-    <template slot-scope="scope">
-      <el-button
-      size="mini"
-      @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-      <el-button
-      size="mini"
-      type="danger"
-      @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-    </template>
-  </el-table-column>
-</el-table>
+    </el-table-column>
+    <el-table-column prop="adminName" label="联系人">
+    </el-table-column>
+    <el-table-column prop="phonenumber" label="电话">
+    </el-table-column>
+    <el-table-column prop="infofrom" label="信息来源">
+    </el-table-column>
+    <el-table-column prop="path" label="渠道">
+    </el-table-column>
+    <el-table-column prop="sp_info" label="备注">
+    </el-table-column>
+    <el-table-column prop="fixTime" label="更新时间">
+    </el-table-column>
+    <el-table-column  label="操作">
+      <template slot-scope="scope">
+        <el-button
+        size="mini"
+        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+        <el-button
+        size="mini"
+        type="danger"
+        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
 
 </el-main>
 <el-main v-else-if="$store.state.EditJudge">

@@ -9,13 +9,10 @@
 
         <el-aside width="200px">
           <el-menu  :default-active="defaultActive"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-
-            <!-- <el-menu-item index="/Home/InformationManagement">商户信息管理</el-menu-item>
-            <el-menu-item index="/Home/Message">短信群发管理</el-menu-item>
-            <el-menu-item index="/Home/MessageHistory">短信群发历史</el-menu-item> -->
             <el-menu-item index="/Home/InformationManagement" @click="toInformationManagement">商户信息管理</el-menu-item>
             <el-menu-item index="/Home/Message" @click="toMessage">短信群发管理</el-menu-item>
             <el-menu-item index="/Home/MessageHistory" @click="toMessageHistory">短信群发历史</el-menu-item>
+            <el-menu-item index="/Home/RecycleBin" @click="toRecycleBin">回收站</el-menu-item>
           </el-menu>
         </el-aside>
         <router-view></router-view>
@@ -25,15 +22,8 @@
 </template>
 
 <script>
-import Message from './Message'
-import MessageHistory from './MessageHistory'
-import InformationManagement from './InformationManagement'
-
 export default {
   name: 'Home',
-  components: {
-    Message, MessageHistory, InformationManagement
-  },
   methods: {
     toInformationManagement () {
       if (this.$route.path !== '/Home/InformationManagement') {
@@ -49,11 +39,15 @@ export default {
       if (this.$route.path !== '/Home/MessageHistory') {
         this.$router.push('/Home/MessageHistory')
       }
+    },
+    toRecycleBin () {
+      if (this.$route.path !== '/Home/RecycleBin') {
+        this.$router.push('/Home/RecycleBin')
+      }
     }
   },
   computed: {
     defaultActive () {
-      console.log(this.$route.path.split('/'))
       return '/Home/' + this.$route.path.split('/')[2]
     }
   },
@@ -79,5 +73,8 @@ body{
   text-align: center;
   line-height: 60px;
   height: 800px;
+}
+.cell {
+  text-align: center;
 }
 </style>
