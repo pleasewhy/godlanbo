@@ -1,5 +1,5 @@
 <template>
-    <el-main>
+    <div class="AddInformation">
         <span>新增商户信息</span>
         <el-divider></el-divider>
 
@@ -49,7 +49,7 @@
             </el-form-item>
 
         </el-form>
-    </el-main>
+    </div>
 </template>
 <script>
 export default {
@@ -101,33 +101,33 @@ export default {
 </script>
 <style scoped>
 .el-form>>>.el-form-item__content{
-    margin-left: 20px !important;
-    float: left;
+  margin-left: 20px !important;
+  float: left;
 }
 .el-form>>>.el-input__inner{
-    width: 210%;
+  width: 210%;
 }
 .el-form>>>.el-form-item__label{
-    margin-left: 470px;
+  margin-left: 470px;
 }
 .el-form>>>button.el-button.el-button--button{
-    margin-left: 570px;
-    margin-top:15px;
-    padding-right: 50px;
-    padding-left: 50px;
+  margin-left: 570px;
+  margin-top:15px;
+  padding-right: 50px;
+  padding-left: 50px;
 }
 .el-form>>>button.el-button.el-button--default{
-    margin-left: 100px;
-    margin-top:15px;
-    padding-right: 50px;
-    padding-left: 50px;
+  margin-left: 100px;
+  margin-top:15px;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+.el-divider{
+  margin: 12px auto 30px auto;
+  background-color: #3a4f80;
 }
 </style>
 <style>
-.el-divider{
-    margin: 12px auto 30px auto;
-    background-color: #3a4f80;
-}
 .el-main{
     /*padding: 12px;*/
     padding-top: 12px;

@@ -109,16 +109,4 @@ h2{
 body{
   margin: 0px;
 }
-.el-mian-from{
-  padding: 20px 20px 10px 20px;
-}
-.el-mian-table {
-  margin: 0px auto;
-  padding: 0px 20px 20px 20px;
-}
-.el-header {
-  background-color:  #808080;
-  color: #333;
-  line-height: 60px;
-}
 </style>

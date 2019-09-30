@@ -1,5 +1,5 @@
 <template>
-  <el-main>
+  <div class="MessageHistory">
       <el-form :inline="true" :model="formInline" >
         <el-form-item label="发送对象">
           <el-input v-model="formInline.MessageTo" placeholder="商户联系电话"></el-input>
@@ -47,7 +47,7 @@
           </div>
         </el-table-column>
       </el-table>
-  </el-main>
+  </div>
 </template>
 <script>
 export default {
@@ -125,6 +125,11 @@ export default {
   margin-bottom: 0px;
   background-color: #3a4f80;
 }
+.el-header {
+  background-color:  #808080;
+  color: #333;
+  line-height: 60px;
+}
 </style>
 <style>
 body{
@@ -141,11 +146,11 @@ body{
   margin-top: 10px;
   padding-top: 0px;
 }
-.el-header {
+/*.el-header {
   background-color:  #808080;
   color: #333;
   line-height: 60px;
-}
+}*/
 .el-aside {
   background-color: rgb(238, 241, 246);
   text-align: center;

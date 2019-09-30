@@ -6,6 +6,7 @@ import MessageHistory from '@/components/MessageHistory'
 import InformationManagement from '@/components/InformationManagement'
 import Login from '@/components/Login'
 import RecycleBin from '@/components/RecycleBin'
+import AllUsersInfo from '@/components/AllUsersInfo'
 
 Vue.use(Router)
 
@@ -53,6 +54,13 @@ const router = new Router({
           path: 'RecycleBin',
           component: RecycleBin,
           meta: {
+            login_required: false
+          }
+        },
+        {
+          path: 'AllUsersInfo',
+          component: AllUsersInfo,
+          mata: {
             login_required: false
           }
         }

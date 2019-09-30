@@ -23,7 +23,7 @@ export default {
 body{
   margin: 0px;
 }
-.el-header {
+/*.el-header {
   background-color:  #808080;
   color: #333;
   line-height: 60px;
@@ -33,5 +33,5 @@ body{
   text-align: center;
   line-height: 60px;
   height: 800px;
-}
+}*/
 </style>

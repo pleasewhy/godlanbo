@@ -1,5 +1,5 @@
 <template>
-    <el-main>
+    <div class="EditInformation">
         <span>编辑商户信息</span>
         <el-divider></el-divider>
 
@@ -36,19 +36,16 @@
                     <el-option label="口碑" value="口碑"></el-option>
                     <el-option label="全部" value="全部"></el-option>
                 </el-select>
-
             </el-form-item>
             <el-form-item label="备注:" >
                 <el-input v-model="formInline.sp_info" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item>
-
                 <el-button type="button" @click="save_edit">保存</el-button>
                 <el-button  @click="cancel">取消</el-button>
             </el-form-item>
-
         </el-form>
-    </el-main>
+    </div>
 </template>
 <script>
 export default {
@@ -121,12 +118,12 @@ export default {
   padding-right: 50px;
   padding-left: 50px;
 }
-</style>
-<style>
 .el-divider{
   margin: 12px auto 30px auto;
   background-color: #3a4f80;
 }
+</style>
+<style>
 .el-main{
   /*padding: 12px;*/
   padding-top: 12px;
