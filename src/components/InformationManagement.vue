@@ -98,6 +98,18 @@ export default {
     EditInformation, AddInformation
   },
   data () {
+    // var item = {
+    //   'name': '由睿婚礼策划',
+    //   'level': '五星好评',
+    //   'address': '新华街',
+    //   'linkAddress': 'http://www.google.com',
+    //   'adminName': '张三',
+    //   'phonenumber': '13100000000',
+    //   'infofrom': '自动抓取',
+    //   'path': '美团',
+    //   'sp_info': '已经联系过一次',
+    //   'fixTime': '2019-12-20 10:00:20'
+    // }
     return {
       tableDateRowIndex: 0,
       formInline: {
@@ -130,6 +142,7 @@ export default {
         'sp_info': '已经联系过一次',
         'fixTime': '2019-12-20 10:00:20'
       }],
+      // tableData: Array(15).fill(item),// 填充对象为同一个引用，所以复选框失效
       multipleSelection: []
     }
   },
@@ -174,7 +187,7 @@ export default {
       this.$store.commit('FixAddJudge')
     },
     handleDelete (index, row) {
-      this.$confirm('是否确认删除该用户信息?', '提示', {
+      this.$confirm('是否删除该用户信息?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -192,17 +205,21 @@ export default {
       })
     },
     handleSelectionChange (val) {
-      console.log(val)
       this.multipleSelection = val
     },
     sendMessage () {
       if (this.multipleSelection.length === 0) {
-        localStorage.clear()
         this.$alert('请勾选商户后再点击群发短信！', '注意', '确定')
       } else {
         this.$alert('已选中' + this.multipleSelection.length + '个商户进行短信群发', '发送成功', '成功')
       }
     }
+  },
+  mounted () {
+    history.pushState(null, null, document.URL)
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL)
+    })
   },
   created () {
     this.$store.commit('InitializationMainJudge')
@@ -233,15 +250,5 @@ body{
   margin-top: 10px;
   padding-top: 0px;
 }
-/*.el-header {
-  background-color:  #808080;
-  color: #333;
-  line-height: 60px;
-}*/
-.el-aside {
-  background-color: rgb(238, 241, 246);
-  text-align: center;
-  line-height: 60px;
-  height: 800px;
-}
+
 </style>

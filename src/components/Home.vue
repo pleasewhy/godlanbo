@@ -80,6 +80,9 @@ export default {
 }
 </script>
 <style scoped>
+.el-menu>>>.el-submenu__title i{
+  color: #ffd04c;
+}
 .el-header {
   background: repeating-linear-gradient(45deg, #333, rgb(84, 92, 100) 50px);
   color: #f5f7fa;
@@ -94,8 +97,12 @@ export default {
 .el-menu-item {
   font-size: 16px;
 }
+span{
+  font-size: 16px;
+}
 </style>
 <style>
+
 body{
   margin: 0px;
 }

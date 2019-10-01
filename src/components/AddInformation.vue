@@ -29,7 +29,6 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="渠道:" >
-
                 <el-select v-model="formInline.path" placeholder="请选择" style="width: 93%;">
                     <el-option label="美团" value="美团"></el-option>
                     <el-option label="饿了么" value="饿了么"></el-option>
@@ -37,17 +36,14 @@
                     <el-option label="口碑" value="口碑"></el-option>
                     <el-option label="全部" value="全部"></el-option>
                 </el-select>
-
             </el-form-item>
             <el-form-item label="备注:" >
                 <el-input v-model="formInline.sp_info" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item>
-
                 <el-button type="button" @click="save_add">保存</el-button>
                 <el-button  @click="cancel">取消</el-button>
             </el-form-item>
-
         </el-form>
     </div>
 </template>
@@ -82,7 +78,6 @@ export default {
           type: 'success',
           message: '保存成功!'
         })
-        // this.$store.commit('updateAllowBack')
         this.$store.commit('FixAddJudge')
         this.$store.commit('FixMainJudge')
       }).catch(() => {
@@ -129,7 +124,7 @@ export default {
 </style>
 <style>
 .el-main{
-    /*padding: 12px;*/
-    padding-top: 12px;
+  /*padding: 12px;*/
+  padding-top: 12px;
 }
 </style>
