@@ -2,7 +2,6 @@
     <div class="EditInformation">
         <span>编辑商户信息</span>
         <el-divider></el-divider>
-
         <el-form :model="formInline" label-width="80px">
             <el-form-item label="商户名称:" >
                 <el-input v-model="formInline.name" placeholder=" " ></el-input>
@@ -102,6 +101,7 @@ export default {
 }
 .el-form>>>.el-input__inner{
   width: 210%;
+  font-weight: bold;
 }
 .el-form>>>.el-form-item__label{
   margin-left: 470px;

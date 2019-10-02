@@ -17,8 +17,9 @@
                   <span>用户</span>
               </template>
               <el-menu-item index="/Home/AllUsersInfo" @click="toSomeRouter('AllUsersInfo')">所有用户</el-menu-item>
+              <el-menu-item index="/Home/AddUser" @click="toSomeRouter('AddUser')">添加用户</el-menu-item>
+              <el-menu-item index="/Home/MyInfo" @click="toSomeRouter('MyInfo')">个人资料</el-menu-item>
             </el-submenu>
-
             <!-- <el-menu-item index="/Home/UsersInfoAndOperation" @click="toUsersInfoAndOperation">用户</el-menu-item> -->
             <!-- <el-menu-item index="/Home/RecycleBin" @click="toRecycleBin">回收站</el-menu-item> -->
           </el-menu>

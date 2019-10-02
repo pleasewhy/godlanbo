@@ -7,6 +7,8 @@ import InformationManagement from '@/components/InformationManagement'
 import Login from '@/components/Login'
 import RecycleBin from '@/components/RecycleBin'
 import AllUsersInfo from '@/components/AllUsersInfo'
+import AddUser from '@/components/AddUser'
+import MyInfo from '@/components/MyInfo'
 
 Vue.use(Router)
 
@@ -61,6 +63,20 @@ const router = new Router({
           path: 'AllUsersInfo',
           component: AllUsersInfo,
           mata: {
+            login_required: false
+          }
+        },
+        {
+          path: 'AddUser',
+          component: AddUser,
+          mata: {
+            login_required: false
+          }
+        },
+        {
+          path: 'MyInfo',
+          component: MyInfo,
+          meta: {
             login_required: false
           }
         }

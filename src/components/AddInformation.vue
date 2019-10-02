@@ -101,6 +101,7 @@ export default {
 }
 .el-form>>>.el-input__inner{
   width: 210%;
+  font-weight: bold;
 }
 .el-form>>>.el-form-item__label{
   margin-left: 470px;

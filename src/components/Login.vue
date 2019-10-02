@@ -12,7 +12,6 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="login('user')">登录</el-button>
-                    <el-button @click="test">test</el-button>
                 </el-form-item>
             </el-form>
         </el-main>

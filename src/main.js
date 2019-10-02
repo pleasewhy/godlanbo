@@ -8,7 +8,6 @@ import axios from 'axios'
 import Qs from 'qs'
 import store from './vuex/store'
 import 'element-ui/lib/theme-chalk/index.css'
-// axios.defaults.headers.common['Authorization'] = 'AUTH_TOKEN';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.prototype.$axios = axios
 Vue.prototype.qs = Qs
