@@ -110,16 +110,10 @@ export default {
       })
     },
     handleSelectionChange (val) {
-      console.log(val)
       this.multipleSelection = val
-    },
-    linkToMessageHistory (key, keyPath) {
-      console.log(key)
     },
     MessageInfoBox (index, row) {
       this.dialogText = row.MessageInfo
-      console.log(index)
-      console.log(row)
       this.dialogVisible = true
     }
   }

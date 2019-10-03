@@ -38,7 +38,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$axios.post('/api/check_account', this.user).then(res => {
-            console.log(res)
+            this.$store.commit('InitializationLoginLevel', res.data.loginInfo)
             this.$router.replace({
               path: '/Home'
             })

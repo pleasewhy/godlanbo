@@ -13,7 +13,7 @@
                 <el-input v-model="formInline.telnum" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item label="用户等级:" >
-                <el-input v-model="formInline.telnum" placeholder=" " ></el-input>
+                <el-input v-model="formInline.privilegeLevel" placeholder=" " disabled></el-input>
             </el-form-item>
 
             <el-form-item label="密码:" >

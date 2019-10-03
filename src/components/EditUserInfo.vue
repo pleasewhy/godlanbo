@@ -4,7 +4,7 @@
         <el-divider></el-divider>
         <el-form :model="formInline" label-width="80px" >
             <el-form-item label="账号:" >
-                <el-input v-model="formInline.account" placeholder=" " ></el-input>
+                <el-input v-model="formInline.account" placeholder=" " disabled></el-input>
             </el-form-item>
             <el-form-item label="公司:" >
                 <el-input v-model="formInline.company" placeholder=" " ></el-input>
@@ -18,17 +18,19 @@
                     <el-option label="铜牌用户" value="铜牌用户"></el-option>
                     <el-option label="银牌用户" value="银牌用户"></el-option>
                     <el-option label="金牌用户" value="金牌用户"></el-option>
+                    <el-option label="管理员" value="管理员" v-if="$store.state.loginLevel == 'superRoot'"></el-option>
                 </el-select>
             </el-form-item>
 
-            <el-form-item label="密码:" >
+            <el-form-item label="密码:" v-if="$store.state.loginLevel == 'superRoot'">
                 <el-input v-model="formInline.password" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item label="IP地址:" >
                 <el-input v-model="formInline.ip" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="default" @click="save_add">保存</el-button>
+                <el-button type="button" @click="save_add">保存</el-button>
+                <el-button  @click="cancel">取消</el-button>
             </el-form-item>
         </el-form>
   </div>
@@ -36,16 +38,16 @@
 <script>
 export default {
   name: 'EditUserInfo',
-  props: ['data'],
+  props: ['date', 'id'],
   data () {
     return {
       formInline: {
-        account: this.data.account,
-        company: this.data.company,
-        telnum: this.data.telnum,
-        privilegeLevel: this.data.privilegeLevel,
-        password: this.data.password,
-        ip: this.data.ip
+        account: this.date.account,
+        company: this.date.company,
+        telnum: this.date.telnum,
+        privilegeLevel: this.date.privilegeLevel,
+        password: this.date.password,
+        ip: this.date.ip
       }
     }
   },
@@ -56,6 +58,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        this.$emit('save_edit', this.formInline, this.id)
         this.$message({
           type: 'success',
           message: '保存成功!'
@@ -66,6 +69,9 @@ export default {
           message: '取消添加'
         })
       })
+    },
+    cancel () {
+      this.$emit('cancel')
     }
   }
 }
@@ -82,14 +88,14 @@ export default {
 .el-form>>>.el-form-item__label{
   margin-left: 470px;
 }
-/*.el-form>>>button.el-button.el-button--button{
-  margin-left: 570px;
+.el-form>>>button.el-button.el-button--button{
+  margin-left: 590px;
   margin-top:15px;
   padding-right: 50px;
   padding-left: 50px;
-}*/
-.el-form>>>button.el-button.el-button--primary{
-  margin-left: 850px;
+}
+.el-form>>>button.el-button.el-button--default{
+  margin-left: 100px;
   margin-top:15px;
   padding-right: 50px;
   padding-left: 50px;

@@ -18,6 +18,7 @@
                     <el-option label="铜牌用户" value="铜牌用户"></el-option>
                     <el-option label="银牌用户" value="银牌用户"></el-option>
                     <el-option label="金牌用户" value="金牌用户"></el-option>
+                    <el-option label="管理员" value="管理员" v-if="$store.state.loginLevel == 'superRoot'"></el-option>
                 </el-select>
             </el-form-item>
 

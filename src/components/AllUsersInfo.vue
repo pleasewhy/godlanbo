@@ -1,5 +1,6 @@
 <template>
   <div class="AllUsersInfo">
+   <div v-show="AllUsersInfo">
     <span>用户信息</span>
     <el-divider></el-divider>
     <el-menu mode="horizontal" :default-active="index" @select="handleSelect">
@@ -8,6 +9,7 @@
       <el-menu-item index="3">铜牌用户</el-menu-item>
       <el-menu-item index="4">银牌用户</el-menu-item>
       <el-menu-item index="5">金牌用户</el-menu-item>
+      <el-menu-item index="6" v-if="$store.state.loginLevel == 'superRoot'">管理员</el-menu-item>
     </el-menu>
     <el-button @click="deleteSelectInfo">
       <i class="el-icon-finished">批量删除</i>
@@ -46,13 +48,24 @@
         </template>
       </el-table-column>
     </el-table>
+   </div>
+   <div v-if="EditUserInfo">
+     <EditUserInfo @save_edit="updateInfo" @cancel="switchPage" :date="usersDate[usersDateRowIndex]" :id="usersDateRowIndex"></EditUserInfo>
+   </div>
   </div>
 </template>
 <script>
+import EditUserInfo from './EditUserInfo.vue'
 export default {
   name: 'AllUsersInfo',
+  components: {
+    EditUserInfo
+  },
   data () {
     return {
+      AllUsersInfo: true,
+      EditUserInfo: false,
+      usersDateRowIndex: 0,
       index: '',
       usersDate: [],
       multipleTable: []
@@ -109,6 +122,15 @@ export default {
     }
   },
   methods: {
+    switchPage () {
+      this.AllUsersInfo = !this.AllUsersInfo
+      this.EditUserInfo = !this.EditUserInfo
+    },
+    updateInfo (obj, index) {
+      this.AllUsersInfo = !this.AllUsersInfo
+      this.EditUserInfo = !this.EditUserInfo
+      this.usersDate[index] = obj
+    },
     deleteSelectInfo () {
       if (this.multipleTable.length === 0) {
         this.$alert('请勾选用户后再操作！', '注意', '确定')
@@ -172,8 +194,9 @@ export default {
       this.multipleTable = val
     },
     handleEdit (index, row) {
-      console.log(index)
-      console.log(row)
+      this.AllUsersInfo = !this.AllUsersInfo
+      this.EditUserInfo = !this.EditUserInfo
+      this.usersDateRowIndex = index
     },
     handleDelete (index, row) {
       this.$confirm('是否删除该用户信息?', '提示', {

@@ -5,22 +5,22 @@
 
         <el-form :model="formInline" label-width="80px">
             <el-form-item label="商户名称:" >
-                <el-input v-model="formInline.name" placeholder=" " ></el-input>
+                <el-input v-model="formInline.name" placeholder=" " :disabled="formInline.infofrom == '自动抓取'"></el-input>
             </el-form-item>
             <el-form-item label="质量评级:" >
-                <el-input v-model="formInline.level" placeholder=" " ></el-input>
+                <el-input v-model="formInline.level" placeholder=" " :disabled="formInline.infofrom == '自动抓取'"></el-input>
             </el-form-item>
             <el-form-item label=" 地址: " >
-                <el-input v-model="formInline.address" placeholder=" " ></el-input>
+                <el-input v-model="formInline.address" placeholder=" " :disabled="formInline.infofrom == '自动抓取'"></el-input>
             </el-form-item>
             <el-form-item label=" 链接: " >
-                <el-input v-model="formInline.linkAddress" placeholder=" " ></el-input>
+                <el-input v-model="formInline.linkAddress" placeholder=" " :disabled="formInline.infofrom == '自动抓取'"></el-input>
             </el-form-item>
             <el-form-item label="联系人:" >
-                <el-input v-model="formInline.adminName" placeholder=" " ></el-input>
+                <el-input v-model="formInline.adminName" placeholder=" " :disabled="formInline.infofrom == '自动抓取'"></el-input>
             </el-form-item>
             <el-form-item label="电话:" >
-                <el-input v-model="formInline.phonenumber" placeholder=" " ></el-input>
+                <el-input v-model="formInline.phonenumber" placeholder=" " :disabled="formInline.infofrom == '自动抓取'"></el-input>
             </el-form-item>
             <el-form-item label="信息来源:" >
                 <el-select v-model="formInline.infofrom" placeholder="请选择" style="width: 93%;">
@@ -41,7 +41,7 @@
                 <el-input v-model="formInline.sp_info" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="button" @click="save_add">保存</el-button>
+                <el-button type="button" @click="save_add">添加</el-button>
                 <el-button  @click="cancel">取消</el-button>
             </el-form-item>
         </el-form>
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     save_add () {
-      this.$confirm('是否保存?', '提示', {
+      this.$confirm('是否添加?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -76,7 +76,7 @@ export default {
         this.$emit('save_add', this.formInline)
         this.$message({
           type: 'success',
-          message: '保存成功!'
+          message: '添加成功!'
         })
         this.$store.commit('FixAddJudge')
         this.$store.commit('FixMainJudge')
@@ -107,7 +107,7 @@ export default {
   margin-left: 470px;
 }
 .el-form>>>button.el-button.el-button--button{
-  margin-left: 570px;
+  margin-left: 590px;
   margin-top:15px;
   padding-right: 50px;
   padding-left: 50px;

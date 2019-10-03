@@ -106,8 +106,22 @@ export default {
       })
     },
     deleteHistoryInfo (index, row) {
-      console.log(index)
-      console.log(row)
+      this.$confirm('是否删除该信息?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.tableData.splice(index, 1)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
     },
     handleSelectionChange (val) {
       this.multipleTable = val

@@ -107,7 +107,7 @@ export default {
   margin-left: 470px;
 }
 .el-form>>>button.el-button.el-button--button{
-  margin-left: 570px;
+  margin-left: 590px;
   margin-top:15px;
   padding-right: 50px;
   padding-left: 50px;
@@ -125,7 +125,6 @@ export default {
 </style>
 <style>
 .el-main{
-  /*padding: 12px;*/
   padding-top: 12px;
 }
 </style>

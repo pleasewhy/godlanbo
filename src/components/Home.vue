@@ -7,7 +7,7 @@
 
       <el-container>
 
-        <el-aside width="200px">
+        <el-aside width="200px"  ref="asideHeight">
           <el-menu  :default-active="defaultActive" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
             <el-menu-item index="/Home/InformationManagement" @click="toSomeRouter('InformationManagement')">商户信息管理</el-menu-item>
             <el-menu-item index="/Home/Message" @click="toSomeRouter('Message')">短信群发管理</el-menu-item>
@@ -20,8 +20,9 @@
               <el-menu-item index="/Home/AddUser" @click="toSomeRouter('AddUser')">添加用户</el-menu-item>
               <el-menu-item index="/Home/MyInfo" @click="toSomeRouter('MyInfo')">个人资料</el-menu-item>
             </el-submenu>
+            <el-divider></el-divider>
             <!-- <el-menu-item index="/Home/UsersInfoAndOperation" @click="toUsersInfoAndOperation">用户</el-menu-item> -->
-            <!-- <el-menu-item index="/Home/RecycleBin" @click="toRecycleBin">回收站</el-menu-item> -->
+            <el-menu-item index="/Home/RecycleBin" @click="toSomeRouter('RecycleBin')">回收站</el-menu-item>
           </el-menu>
         </el-aside>
         <el-main>
@@ -35,32 +36,19 @@
 <script>
 export default {
   name: 'Home',
+  data () {
+    return {
+      bodyHeight: ''
+    }
+  },
+  watch: {
+    bodyHeight: function () {
+      console.log(-1)
+      // this.bodyHeight = (parseInt(this.bodyHeight) - 100) + ''
+      this.$refs.asideHeight.$el.style.height = this.bodyHeight + 'px'
+    }
+  },
   methods: {
-    // toInformationManagement () {
-    //   if (this.$route.path !== '/Home/InformationManagement') {
-    //     this.$router.push('/Home/InformationManagement')
-    //   }
-    // },
-    // toMessage () {
-    //   if (this.$route.path !== '/Home/Message') {
-    //     this.$router.push('/Home/Message')
-    //   }
-    // },
-    // toMessageHistory () {
-    //   if (this.$route.path !== '/Home/MessageHistory') {
-    //     this.$router.push('/Home/MessageHistory')
-    //   }
-    // },
-    // toRecycleBin () {
-    //   if (this.$route.path !== '/Home/RecycleBin') {
-    //     this.$router.push('/Home/RecycleBin')
-    //   }
-    // },
-    // toAllUsersInfo () {
-    //   if (this.$route.path !== '/Home/AllUsersInfo') {
-    //     this.$router.push('/Home/AllUsersInfo')
-    //   }
-    // },
     toSomeRouter (RouterPath) {
       if (this.$route.path !== '/Home/' + RouterPath) {
         this.$router.push('/Home/' + RouterPath)
@@ -73,6 +61,11 @@ export default {
     }
   },
   mounted () {
+    this.$set(this.data, 'bodyHeight', `${document.documentElement.clientHeight}`)
+    window.onresize = function temp() {
+      this.bodyHeight = `${document.documentElement.clientHeight}`
+      console.log(this.bodyHeight)
+    }
     history.pushState(null, null, document.URL)
     window.addEventListener('popstate', function () {
       history.pushState(null, null, document.URL)
@@ -101,6 +94,11 @@ export default {
 span{
   font-size: 16px;
 }
+.el-divider--horizontal {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: #333;
+}
 </style>
 <style>
 
@@ -112,7 +110,6 @@ body{
   background-color: #bebfc1;
   text-align: center;
   line-height: 60px;
-  height: 835px;
 }
 .cell {
   text-align: center;
