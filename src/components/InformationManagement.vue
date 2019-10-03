@@ -79,6 +79,12 @@
           </template>
         </el-table-column>
       </el-table>
+      <div class="block">
+        <el-pagination
+          layout="prev, pager, next"
+          :total="1000">
+        </el-pagination>
+      </div>
     </div>
     <div v-else-if="$store.state.EditJudge">
       <EditInformation @save_edit="updateform" :date="tableData[tableDateRowIndex]" :id="tableDateRowIndex"></EditInformation>
@@ -249,5 +255,14 @@ body{
 .el-main{
   margin-top: 10px;
   padding-top: 0px;
+}
+.el-pagination{
+  text-align: center;
+}
+.el-pager li{
+  font-size: 16px;
+}
+.el-pagination .btn-next .el-icon, .el-pagination .btn-prev .el-icon{
+  font-size: 16px;
 }
 </style>

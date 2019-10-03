@@ -43,9 +43,8 @@ export default {
   },
   watch: {
     bodyHeight: function () {
-      console.log(-1)
       // this.bodyHeight = (parseInt(this.bodyHeight) - 100) + ''
-      this.$refs.asideHeight.$el.style.height = this.bodyHeight + 'px'
+      this.$refs.asideHeight.$el.style.height = this.bodyHeight - 100 + 'px'
     }
   },
   methods: {
@@ -61,8 +60,13 @@ export default {
     }
   },
   mounted () {
-    this.$set(this.data, 'bodyHeight', `${document.documentElement.clientHeight}`)
-    window.onresize = function temp() {
+    // this.$set(this.data, 'bodyHeight', `${document.documentElement.clientHeight}`)
+    // window.onresize = function temp() {
+    //   this.bodyHeight = `${document.documentElement.clientHeight}`
+    //   console.log(this.bodyHeight)
+    // }
+    this.bodyHeight = document.documentElement.clientHeight
+    window.onresize = () => {
       this.bodyHeight = `${document.documentElement.clientHeight}`
       console.log(this.bodyHeight)
     }
