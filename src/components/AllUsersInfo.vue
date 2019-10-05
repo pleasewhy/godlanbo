@@ -32,7 +32,8 @@
       </el-table-column>
       <el-table-column prop="account" label="账号"></el-table-column>
       <el-table-column prop="company" label="公司"></el-table-column>
-      <el-table-column prop="telnum" label="联系方式"></el-table-column>
+      <el-table-column prop="telnum" label="公司电话"></el-table-column>
+      <el-table-column prop="companyBoss" label="公司负责人"></el-table-column>
       <el-table-column prop="privilegeLevel" label="用户等级"></el-table-column>
       <el-table-column prop="password" label="密码"></el-table-column>
       <el-table-column prop="ip" label="IP地址"></el-table-column>
@@ -48,6 +49,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="block">
+        <el-pagination
+          @current-change="handleCurrentPage"
+          layout="prev, pager, next, jumper"
+          :page-size="20"
+          :total="totalInfoNum">
+        </el-pagination>
+      </div>
    </div>
    <div v-if="EditUserInfo">
      <EditUserInfo @save_edit="updateInfo" @cancel="switchPage" :date="usersDate[usersDateRowIndex]" :id="usersDateRowIndex"></EditUserInfo>
@@ -66,6 +75,7 @@ export default {
       AllUsersInfo: true,
       EditUserInfo: false,
       usersDateRowIndex: 0,
+      totalInfoNum: 1000,
       index: '',
       usersDate: [],
       multipleTable: []
@@ -82,6 +92,7 @@ export default {
             account: '13152526525',
             company: '上海企业',
             telnum: '123354564',
+            companyBoss: 'xxx',
             privilegeLevel: '银牌用户',
             password: '12345678',
             ip: '127.0.0.1'
@@ -89,6 +100,7 @@ export default {
             account: '13152526525',
             company: '深圳企业',
             telnum: '123354564',
+            companyBoss: 'xxx',
             privilegeLevel: '银牌用户',
             password: '12345678',
             ip: '127.0.0.1'
@@ -96,6 +108,7 @@ export default {
             account: '13152526525',
             company: '内江企业',
             telnum: '123354564',
+            companyBoss: 'xxx',
             privilegeLevel: '银牌用户',
             password: '12345678',
             ip: '127.0.0.1'
@@ -103,6 +116,7 @@ export default {
             account: '13152526525',
             company: '大连企业',
             telnum: '123354564',
+            companyBoss: 'xxx',
             privilegeLevel: '银牌用户',
             password: '12345678',
             ip: '127.0.0.1'
@@ -113,6 +127,7 @@ export default {
             account: '13152526525',
             company: '上海企业',
             telnum: '123354564',
+            companyBoss: 'aaa',
             privilegeLevel: '普通用户',
             password: '12345678',
             ip: '127.0.0.1'
@@ -125,6 +140,9 @@ export default {
     switchPage () {
       this.AllUsersInfo = !this.AllUsersInfo
       this.EditUserInfo = !this.EditUserInfo
+    },
+    handleCurrentPage (val) {
+      // 123
     },
     updateInfo (obj, index) {
       this.AllUsersInfo = !this.AllUsersInfo

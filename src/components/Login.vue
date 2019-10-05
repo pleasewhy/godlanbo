@@ -40,7 +40,7 @@ export default {
           this.$axios.post('/api/check_account', this.user).then(res => {
             this.$store.commit('InitializationLoginLevel', res.data.loginInfo)
             this.$router.replace({
-              path: '/Home'
+              path: '/admin'
             })
           }).catch(err => { alert('登陆失败'); console.log(err) })
         } else {

@@ -20,7 +20,7 @@
                 <el-input v-model="formInline.password" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item label="IP地址:" >
-                <el-input v-model="formInline.ip" placeholder=" " ></el-input>
+                <el-input v-model="formInline.ip" placeholder=" " disabled></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="save_add">保存</el-button>
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     save_add () {
-      this.$confirm('是否添加?', '提示', {
+      this.$confirm('是否保存?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -53,7 +53,7 @@ export default {
         console.log(this.formInline)
         this.$message({
           type: 'success',
-          message: '添加成功!'
+          message: '保存成功!'
         })
       }).catch(() => {
         this.$message({
@@ -84,7 +84,7 @@ export default {
   padding-left: 50px;
 }*/
 .el-form>>>button.el-button.el-button--primary{
-  margin-left: 850px;
+  margin-left: 895px;
   margin-top:15px;
   padding-right: 50px;
   padding-left: 50px;

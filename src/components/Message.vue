@@ -1,7 +1,7 @@
 <template>
   <div class="Message">
-    <el-form :inline="true" :model="formInline" >
-      <el-form-item label="发送对象">
+    <el-form :inline="true" :model="formInline" hide-required-asterisk ref="search">
+      <el-form-item label="发送对象" prop="MessageTo" :rules="[{required: true, message: '不能为空', trigger: 'blur'}]">
         <el-input v-model="formInline.MessageTo" placeholder="商户联系电话"></el-input>
       </el-form-item>
       <el-form-item label="发送时间" label-width="100px">
@@ -23,7 +23,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-col :push="12"><el-button type="primary">查询</el-button></el-col>
+        <el-col :push="12"><el-button type="primary" @click="searchInfo('search')">查询</el-button></el-col>
       </el-form-item>
     </el-form>
     <el-table :data="tableData"  height="610" stripe>
@@ -62,6 +62,14 @@
       </template>
     </el-table-column>
   </el-table>
+  <div class="block">
+        <el-pagination
+          @current-change="handleCurrentPage"
+          layout="prev, pager, next, jumper"
+          :page-size="20"
+          :total="totalInfoNum">
+        </el-pagination>
+      </div>
 </div>
 </template>
 <script>
@@ -70,6 +78,7 @@ export default {
   data () {
     return {
       dialogText: '',
+      totalInfoNum: 1000,
       dialogVisible: false,
       formInline: {
         MessageTo: '',
@@ -109,12 +118,24 @@ export default {
         })
       })
     },
+    handleCurrentPage (val) {
+      // xxx
+    },
     handleSelectionChange (val) {
       this.multipleSelection = val
     },
     MessageInfoBox (index, row) {
       this.dialogText = row.MessageInfo
       this.dialogVisible = true
+    },
+    searchInfo (formdate) {
+      this.$refs[formdate].validate((valid) => {
+        if (valid) {
+          // xxx
+        } else {
+          return false
+        }
+      })
     }
   }
 }

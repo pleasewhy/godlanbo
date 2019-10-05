@@ -2,15 +2,18 @@
   <div class="EditUserInfo">
     <span>编辑用户</span>
         <el-divider></el-divider>
-        <el-form :model="formInline" label-width="80px" >
+        <el-form :model="formInline" label-width="90px" >
             <el-form-item label="账号:" >
                 <el-input v-model="formInline.account" placeholder=" " disabled></el-input>
             </el-form-item>
             <el-form-item label="公司:" >
                 <el-input v-model="formInline.company" placeholder=" " ></el-input>
             </el-form-item>
-            <el-form-item label=" 联系方式: " >
+            <el-form-item label=" 公司电话: " >
                 <el-input v-model="formInline.telnum" placeholder=" " ></el-input>
+            </el-form-item>
+            <el-form-item label="公司负责人:" >
+                <el-input v-model="formInline.companyBoss" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item label="用户等级:" >
                 <el-select v-model="formInline.privilegeLevel" placeholder="请选择" style="width: 93%;">
@@ -26,7 +29,7 @@
                 <el-input v-model="formInline.password" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item label="IP地址:" >
-                <el-input v-model="formInline.ip" placeholder=" " ></el-input>
+                <el-input v-model="formInline.ip" placeholder=" " disabled></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="button" @click="save_add">保存</el-button>
@@ -45,6 +48,7 @@ export default {
         account: this.date.account,
         company: this.date.company,
         telnum: this.date.telnum,
+        companyBoss: this.date.companyBoss,
         privilegeLevel: this.date.privilegeLevel,
         password: this.date.password,
         ip: this.date.ip

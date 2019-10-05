@@ -2,15 +2,18 @@
   <div class="AddUser">
     <span>添加用户</span>
         <el-divider></el-divider>
-        <el-form :model="formInline" label-width="80px" >
-            <el-form-item label="账号:" >
-                <el-input v-model="formInline.account" placeholder=" " ></el-input>
-            </el-form-item>
+        <el-form :model="formInline" label-width="90px" >
+            <!-- <el-form-item label="账号:" >
+                <el-input v-model="formInline.account" placeholder=" " :disabled="formInline.userNum != '1'"></el-input>
+            </el-form-item> -->
             <el-form-item label="公司:" >
                 <el-input v-model="formInline.company" placeholder=" " ></el-input>
             </el-form-item>
-            <el-form-item label=" 联系方式: " >
+            <el-form-item label="公司电话: " >
                 <el-input v-model="formInline.telnum" placeholder=" " ></el-input>
+            </el-form-item>
+            <el-form-item label="公司负责人:" >
+                <el-input v-model="formInline.companyBoss" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item label="用户等级:" >
                 <el-select v-model="formInline.privilegeLevel" placeholder="请选择" style="width: 93%;">
@@ -21,12 +24,12 @@
                     <el-option label="管理员" value="管理员" v-if="$store.state.loginLevel == 'superRoot'"></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="添加数量:" >
+                <el-input v-model="formInline.userNum" placeholder="1" ></el-input>
+            </el-form-item>
 
             <el-form-item label="密码:" >
-                <el-input v-model="formInline.password" placeholder=" " ></el-input>
-            </el-form-item>
-            <el-form-item label="IP地址:" >
-                <el-input v-model="formInline.ip" placeholder=" " ></el-input>
+                <el-input v-model="formInline.password" placeholder="12345678" disabled></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="save_add">添加</el-button>
@@ -40,12 +43,13 @@ export default {
   data () {
     return {
       formInline: {
-        account: '',
+        // account: '',
         company: '',
         telnum: '',
+        companyBoss: '',
         privilegeLevel: '',
-        password: '',
-        ip: ''
+        userNum: '1',
+        password: '12345678'
       }
     }
   },
@@ -84,13 +88,13 @@ export default {
   margin-left: 470px;
 }
 /*.el-form>>>button.el-button.el-button--button{
-  margin-left: 570px;
+  margin-left: 590px;
   margin-top:15px;
   padding-right: 50px;
   padding-left: 50px;
 }*/
 .el-form>>>button.el-button.el-button--primary{
-  margin-left: 850px;
+  margin-left: 895px;
   margin-top:15px;
   padding-right: 50px;
   padding-left: 50px;

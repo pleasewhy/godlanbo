@@ -1,18 +1,18 @@
 <template>
   <div class="InformationManagement">
     <div v-if="$store.state.MainJudge">
-      <el-form :inline="true" :model="formInline">
-        <el-form-item label="关键字">
+      <el-form  :model="formInline" :rules="rules" ref="search" :inline="true" hide-required-asterisk>
+        <el-form-item label="关键字" prop="keyword">
           <el-input v-model="formInline.keyword" placeholder="相关信息"></el-input>
         </el-form-item>
-        <el-form-item label="信息来源" label-width="100px">
+        <el-form-item label="信息来源" label-width="100px" prop="infofrom">
           <el-select v-model="formInline.infofrom" placeholder="请选择">
             <el-option label="自动抓取" value="自动抓取"></el-option>
             <el-option label="手动生成" value="手动生成"></el-option>
             <el-option label="全部" value="全部"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="渠道" label-width="100px">
+        <el-form-item label="渠道" label-width="100px" prop="path">
           <el-select v-model="formInline.path" placeholder="请选择">
             <el-option label="美团" value="美团"></el-option>
             <el-option label="饿了么" value="饿了么"></el-option>
@@ -31,10 +31,10 @@
           </el-col>
         </el-form-item>
       <el-form-item>
-        <el-button type="primary">查询</el-button>
+        <el-button type="primary" @click="submitSearch('search')">查询</el-button>
         <el-button @click="addInformation">新增</el-button>
         <el-button>导出</el-button>
-        <el-button type="primary" @click="sendMessage">群发短信</el-button>
+        <el-button type="primary" @click="sendMessage" v-if="$store.state.loginLevel == 'superRoot'">群发短信</el-button>
       </el-form-item>
     </el-form>
 
@@ -81,8 +81,10 @@
       </el-table>
       <div class="block">
         <el-pagination
-          layout="prev, pager, next"
-          :total="1000">
+          @current-change="handleCurrentPage"
+          layout="prev, pager, next, jumper"
+          :page-size="20"
+          :total="totalInfoNum">
         </el-pagination>
       </div>
     </div>
@@ -104,20 +106,9 @@ export default {
     EditInformation, AddInformation
   },
   data () {
-    // var item = {
-    //   'name': '由睿婚礼策划',
-    //   'level': '五星好评',
-    //   'address': '新华街',
-    //   'linkAddress': 'http://www.google.com',
-    //   'adminName': '张三',
-    //   'phonenumber': '13100000000',
-    //   'infofrom': '自动抓取',
-    //   'path': '美团',
-    //   'sp_info': '已经联系过一次',
-    //   'fixTime': '2019-12-20 10:00:20'
-    // }
     return {
       tableDateRowIndex: 0,
+      totalInfoNum: 1000,
       formInline: {
         keyword: '',
         infofrom: '',
@@ -125,30 +116,34 @@ export default {
         date1: '',
         date2: ''
       },
+      rules: {
+        keyword: [{required: true, message: '不能为空', trigger: 'blur'}],
+        infofrom: [{required: true, message: '不能为空', trigger: 'blur'}],
+        path: [{required: true, message: '不能为空', trigger: 'blur'}]
+      },
       tableData: [{
-        'name': '由睿婚礼策划',
-        'level': '五星好评',
-        'address': '新华街',
-        'linkAddress': 'http://www.google.com',
-        'adminName': '张三',
-        'phonenumber': '13100000000',
-        'infofrom': '自动抓取',
-        'path': '美团',
-        'sp_info': '已经联系过一次',
-        'fixTime': '2019-12-20 10:00:20'
+        name: '由睿婚礼策划',
+        level: '五星好评',
+        address: '新华街',
+        linkAddress: 'http://www.google.com',
+        adminName: '张三',
+        phonenumber: '13100000000',
+        infofrom: '自动抓取',
+        path: '美团',
+        sp_info: '已经联系过一次',
+        fixTime: '2019-12-20 10:00:20'
       }, {
-        'name': '由睿婚礼策划',
-        'level': '五星好评',
-        'address': '新华街',
-        'linkAddress': 'http://www.google.com',
-        'adminName': '张三',
-        'phonenumber': '13100000000',
-        'infofrom': '自动抓取',
-        'path': '美团',
-        'sp_info': '已经联系过一次',
-        'fixTime': '2019-12-20 10:00:20'
+        name: '由睿婚礼策划',
+        level: '五星好评',
+        address: '新华街',
+        linkAddress: 'http://www.google.com',
+        adminName: '张三',
+        phonenumber: '13100000000',
+        infofrom: '自动抓取',
+        path: '美团',
+        sp_info: '已经联系过一次',
+        fixTime: '2019-12-20 10:00:20'
       }],
-      // tableData: Array(15).fill(item),// 填充对象为同一个引用，所以复选框失效
       multipleSelection: []
     }
   },
@@ -174,6 +169,20 @@ export default {
         day = '0' + day
       }
       return year + '-' + month + '-' + day + ' ' + hour + ':' + minutes + ':' + sec
+    },
+    submitSearch (formdate) {
+      // 提交数据到后端查询，接受返回数据
+      this.$refs[formdate].validate((valid) => {
+        if (valid) {
+          console.log(1)
+        } else {
+          return false
+        }
+      })
+    },
+    handleCurrentPage (val) {
+      console.log(val)
+      // 传递给后端，重新获取数据
     },
     updateform (obj, index) {
       obj.fixTime = this.getDateTime()
@@ -219,6 +228,16 @@ export default {
       } else {
         this.$alert('已选中' + this.multipleSelection.length + '个商户进行短信群发', '发送成功', '成功')
       }
+    },
+    getPageDate (pagenumber) {
+      console.log(pagenumber)
+      // this.$axios.post('xxx', pagenumber)
+      //   .then(response => {
+
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error)
+      //   })
     }
   },
   mounted () {
@@ -228,6 +247,8 @@ export default {
     })
   },
   created () {
+    // getDate 在页面加载前获取数据
+    this.getPageDate(1)
     this.$store.commit('InitializationMainJudge')
     this.$store.commit('InitializationEditJudge')
     this.$store.commit('InitializationAddJudge')
@@ -256,13 +277,5 @@ body{
   margin-top: 10px;
   padding-top: 0px;
 }
-.el-pagination{
-  text-align: center;
-}
-.el-pager li{
-  font-size: 16px;
-}
-.el-pagination .btn-next .el-icon, .el-pagination .btn-prev .el-icon{
-  font-size: 16px;
-}
+
 </style>

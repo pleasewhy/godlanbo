@@ -1,18 +1,19 @@
 <template>
-  <div class="admin">
+  <div class="user">
     <el-container>
       <el-header height="100px">
-        <h1 style="margin-left: 20px">后台管理系统</h1>
+        <h1 style="margin-left: 20px">商户查询系统</h1>
       </el-header>
 
       <el-container>
 
         <el-aside width="200px"  ref="asideHeight">
           <el-menu  :default-active="defaultActive" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-            <el-menu-item index="/admin/InformationManagement" @click="toSomeRouter('InformationManagement')">商户信息管理</el-menu-item>
-            <el-menu-item index="/admin/Message" @click="toSomeRouter('Message')">短信群发管理</el-menu-item>
-            <el-menu-item index="/admin/MessageHistory" @click="toSomeRouter('MessageHistory')">短信群发历史</el-menu-item>
-            <el-submenu index="users">
+            <el-menu-item index="/user/SearchInfo" @click="toSomeRouter('SearchInfo')">商户信息查询</el-menu-item>
+            <el-menu-item index="/user/UserInfo" @click="toSomeRouter('UserInfo')">个人资料</el-menu-item>
+            <!-- <el-menu-item index="/admin/Message" @click="toSomeRouter('Message')">短信群发管理</el-menu-item>
+            <el-menu-item index="/admin/MessageHistory" @click="toSomeRouter('MessageHistory')">短信群发历史</el-menu-item> -->
+            <!-- <el-submenu index="users">
               <template slot="title">
                   <span>用户</span>
               </template>
@@ -20,9 +21,9 @@
               <el-menu-item index="/admin/AddUser" @click="toSomeRouter('AddUser')">添加用户</el-menu-item>
               <el-menu-item index="/admin/MyInfo" @click="toSomeRouter('MyInfo')">个人资料</el-menu-item>
             </el-submenu>
-            <el-divider></el-divider>
+            <el-divider></el-divider> -->
             <!-- <el-menu-item index="/admin/UsersInfoAndOperation" @click="toUsersInfoAndOperation">用户</el-menu-item> -->
-            <el-menu-item index="/admin/RecycleBin" @click="toSomeRouter('RecycleBin')">回收站</el-menu-item>
+            <!-- <el-menu-item index="/admin/RecycleBin" @click="toSomeRouter('RecycleBin')">回收站</el-menu-item> -->
           </el-menu>
         </el-aside>
         <el-main>
@@ -32,10 +33,9 @@
     </el-container>
   </div>
 </template>
-
 <script>
 export default {
-  name: 'admin',
+  name: 'user',
   data () {
     return {
       bodyHeight: ''
@@ -48,14 +48,14 @@ export default {
   },
   methods: {
     toSomeRouter (RouterPath) {
-      if (this.$route.path !== '/admin/' + RouterPath) {
-        this.$router.push('/admin/' + RouterPath)
+      if (this.$route.path !== '/user/' + RouterPath) {
+        this.$router.push('/user/' + RouterPath)
       }
     }
   },
   computed: {
     defaultActive () {
-      return '/admin/' + this.$route.path.split('/')[2]
+      return '/user/' + this.$route.path.split('/')[2]
     }
   },
   mounted () {
@@ -103,7 +103,6 @@ span{
 }
 </style>
 <style>
-
 body{
   margin: 0px;
 }

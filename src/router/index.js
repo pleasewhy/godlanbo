@@ -9,6 +9,9 @@ import RecycleBin from '@/components/RecycleBin'
 import AllUsersInfo from '@/components/AllUsersInfo'
 import AddUser from '@/components/AddUser'
 import MyInfo from '@/components/MyInfo'
+import user from '@/components/user'
+import SearchInfo from '@/components/SearchInfo'
+import UserInfo from '@/components/UserInfo'
 
 Vue.use(Router)
 
@@ -20,8 +23,34 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/Home',
-      // name: 'Home',
+      path: '/user',
+      name: 'user',
+      component: user,
+      meta: {
+        login_required: false
+      },
+      children: [
+        {
+          path: 'SearchInfo',
+          name: 'SearchInfo',
+          component: SearchInfo,
+          meta: {
+            login_required: false
+          }
+        },
+        {
+          path: 'UserInfo',
+          name: 'UserInfo',
+          component: UserInfo,
+          meta: {
+            login_required: false
+          }
+        }
+      ]
+    },
+    {
+      path: '/admin',
+      name: 'admin',
       component: Home,
       meta: {
         login_required: false
@@ -29,7 +58,7 @@ const router = new Router({
       children: [
         {
           path: 'Message',
-          // name:'Message',
+          name: 'Message',
           component: Message,
           meta: {
             login_required: false
@@ -37,7 +66,7 @@ const router = new Router({
         },
         {
           path: 'MessageHistory',
-          // name:'MessageHistory',
+          name: 'MessageHistory',
           component: MessageHistory,
           meta: {
             login_required: false
@@ -45,7 +74,7 @@ const router = new Router({
         },
         {
           path: 'InformationManagement',
-          // name:'InformationManagement',
+          name: 'InformationManagement',
           component: InformationManagement,
 
           meta: {
@@ -54,6 +83,7 @@ const router = new Router({
         },
         {
           path: 'RecycleBin',
+          name: 'RecycleBin',
           component: RecycleBin,
           meta: {
             login_required: false
@@ -61,6 +91,7 @@ const router = new Router({
         },
         {
           path: 'AllUsersInfo',
+          name: 'AllUsersInfo',
           component: AllUsersInfo,
           mata: {
             login_required: false
@@ -68,6 +99,7 @@ const router = new Router({
         },
         {
           path: 'AddUser',
+          name: 'AddUser',
           component: AddUser,
           mata: {
             login_required: false
@@ -75,6 +107,7 @@ const router = new Router({
         },
         {
           path: 'MyInfo',
+          name: 'MyInfo',
           component: MyInfo,
           meta: {
             login_required: false

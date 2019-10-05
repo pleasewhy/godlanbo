@@ -39,6 +39,14 @@
           </div>
         </el-table-column>
       </el-table>
+      <div class="block">
+        <el-pagination
+          @current-change="handleCurrentPage"
+          layout="prev, pager, next, jumper"
+          :page-size="20"
+          :total="totalInfoNum">
+        </el-pagination>
+      </div>
   </div>
 </template>
 <script>
@@ -46,6 +54,7 @@ export default {
   name: 'RecycleBin',
   data () {
     return {
+      totalInfoNum: 1000,
       formTable: {
         keyword: '',
         timeFrame: ''
@@ -178,6 +187,9 @@ export default {
           message: '已取消恢复'
         })
       })
+    },
+    handleCurrentPage (val) {
+      // xxx
     }
   }
 }
