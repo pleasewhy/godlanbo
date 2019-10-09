@@ -25,6 +25,8 @@
         <el-dropdown-item command="d">金牌用户</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
+    <el-input v-model="searchKeyWord" placeholder="用户相关信息"></el-input>
+    <el-button type="primary" @click="searchInfo">查询</el-button>
     <el-table ref="multipleTable" :data="usersDate"  height="610" @selection-change="handleSelectionChange" stripe>
       <el-table-column
           type="selection"
@@ -34,7 +36,7 @@
       <el-table-column prop="company" label="公司"></el-table-column>
       <el-table-column prop="telnum" label="公司电话"></el-table-column>
       <el-table-column prop="companyBoss" label="公司负责人"></el-table-column>
-      <el-table-column prop="privilegeLevel" label="用户等级"></el-table-column>
+      <el-table-column prop="right" label="用户等级"></el-table-column>
       <el-table-column prop="password" label="密码"></el-table-column>
       <el-table-column prop="ip" label="IP地址"></el-table-column>
       <el-table-column  label="操作">
@@ -78,11 +80,13 @@ export default {
       totalInfoNum: 1000,
       index: '',
       usersDate: [],
-      multipleTable: []
+      multipleTable: [],
+      searchKeyWord: ''
     }
   },
   created () {
     this.index = '1'
+    this.getDate()
   },
   watch: {
     index: function (val) {
@@ -93,7 +97,7 @@ export default {
             company: '上海企业',
             telnum: '123354564',
             companyBoss: 'xxx',
-            privilegeLevel: '银牌用户',
+            right: '银牌用户',
             password: '12345678',
             ip: '127.0.0.1'
           }, {
@@ -101,7 +105,7 @@ export default {
             company: '深圳企业',
             telnum: '123354564',
             companyBoss: 'xxx',
-            privilegeLevel: '银牌用户',
+            right: '银牌用户',
             password: '12345678',
             ip: '127.0.0.1'
           }, {
@@ -109,7 +113,7 @@ export default {
             company: '内江企业',
             telnum: '123354564',
             companyBoss: 'xxx',
-            privilegeLevel: '银牌用户',
+            right: '银牌用户',
             password: '12345678',
             ip: '127.0.0.1'
           }, {
@@ -117,7 +121,7 @@ export default {
             company: '大连企业',
             telnum: '123354564',
             companyBoss: 'xxx',
-            privilegeLevel: '银牌用户',
+            right: '银牌用户',
             password: '12345678',
             ip: '127.0.0.1'
           }]
@@ -128,7 +132,7 @@ export default {
             company: '上海企业',
             telnum: '123354564',
             companyBoss: 'aaa',
-            privilegeLevel: '普通用户',
+            right: '普通用户',
             password: '12345678',
             ip: '127.0.0.1'
           }]
@@ -143,6 +147,19 @@ export default {
     },
     handleCurrentPage (val) {
       // 123
+    },
+    getDate () {
+      // xxx
+    },
+    searchInfo () {
+      // submit this.searchInfo
+      // this.$axios.post('/api/check_account', this.searchInfo).then(res => {
+      //   this.$store.commit('InitializationLoginLevel', res.data.loginInfo)
+      //   this.$router.replace({
+      //     path: '/admin'
+      //   })
+      // }).catch(err => { alert('登陆失败'); console.log(err) })
+      console.log('submit')
     },
     updateInfo (obj, index) {
       this.AllUsersInfo = !this.AllUsersInfo
@@ -184,16 +201,16 @@ export default {
         }).then(() => {
           switch (command) {
             case 'a':
-              this.multipleTable.map(i => { i.privilegeLevel = '普通用户' })
+              this.multipleTable.map(i => { i.right = '普通用户' })
               break
             case 'b':
-              this.multipleTable.map(i => { i.privilegeLevel = '铜牌用户' })
+              this.multipleTable.map(i => { i.right = '铜牌用户' })
               break
             case 'c':
-              this.multipleTable.map(i => { i.privilegeLevel = '银牌用户' })
+              this.multipleTable.map(i => { i.right = '银牌用户' })
               break
             case 'd':
-              this.multipleTable.map(i => { i.privilegeLevel = '金牌用户' })
+              this.multipleTable.map(i => { i.right = '金牌用户' })
               break
           }
           this.$message({
@@ -254,6 +271,9 @@ el-header {
 }
 .el-menu--horizontal {
   margin-bottom: 15px;
+}
+.el-input{
+  width: 15%;
 }
 </style>
 <style>

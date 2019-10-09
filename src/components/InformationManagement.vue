@@ -15,9 +15,7 @@
         <el-form-item label="渠道" label-width="100px" prop="path">
           <el-select v-model="formInline.path" placeholder="请选择">
             <el-option label="美团" value="美团"></el-option>
-            <el-option label="饿了么" value="饿了么"></el-option>
             <el-option label="大众点评" value="大众点评"></el-option>
-            <el-option label="口碑" value="口碑"></el-option>
             <el-option label="全部" value="全部"></el-option>
           </el-select>
         </el-form-item>
@@ -33,19 +31,19 @@
       <el-form-item>
         <el-button type="primary" @click="submitSearch('search')">查询</el-button>
         <el-button @click="addInformation">新增</el-button>
-        <el-button>导出</el-button>
+        <el-button >导出</el-button>
         <el-button type="primary" @click="sendMessage" v-if="$store.state.loginLevel == 'superRoot'">群发短信</el-button>
       </el-form-item>
     </el-form>
 
-      <el-table  ref="multipleTable" :data="tableData"  height="610" @selection-change="handleSelectionChange" stripe>
+      <el-table id="out-table" ref="multipleTable" :data="tableData"  height="610" @selection-change="handleSelectionChange" stripe>
         <el-table-column
           type="selection"
           width="55">
         </el-table-column>
         <el-table-column prop="name" label="商户名称" width="120">
         </el-table-column>
-        <el-table-column prop="level" label="质量评级" width="120">
+        <el-table-column prop="level" label="质量评级" width="80">
         </el-table-column>
         <el-table-column prop="address" label="地址" width="120">
         </el-table-column>
@@ -62,6 +60,8 @@
         <el-table-column prop="infofrom" label="信息来源">
         </el-table-column>
         <el-table-column prop="path" label="渠道">
+        </el-table-column>
+        <el-table-column prop="commentCount" label="评论数" width="80">
         </el-table-column>
         <el-table-column prop="sp_info" label="备注">
         </el-table-column>
@@ -87,6 +87,23 @@
           :total="totalInfoNum">
         </el-pagination>
       </div>
+      <el-dialog
+            title="短信内容:"
+            :visible.sync="dialogVisible"
+            width="30%">
+            <el-divider></el-divider>
+            <el-input
+              type="textarea"
+              :rows="7"
+              placeholder="请输入内容"
+              resize="none"
+              v-model="textarea">
+            </el-input>
+
+            <span slot="footer" class="dialog-footer">
+              <el-button type="primary" @click="sendMessageAlert">发送</el-button>
+            </span>
+        </el-dialog>
     </div>
     <div v-else-if="$store.state.EditJudge">
       <EditInformation @save_edit="updateform" :date="tableData[tableDateRowIndex]" :id="tableDateRowIndex"></EditInformation>
@@ -100,6 +117,8 @@
 <script>
 import EditInformation from './EditInformation.vue'
 import AddInformation from './AddInformation.vue'
+// import FileSaver from 'file-saver'
+// import XLSX from 'xlsx'
 export default {
   name: 'InformationManagement',
   components: {
@@ -108,7 +127,9 @@ export default {
   data () {
     return {
       tableDateRowIndex: 0,
+      dialogVisible: false,
       totalInfoNum: 1000,
+      textarea: '',
       formInline: {
         keyword: '',
         infofrom: '',
@@ -123,24 +144,26 @@ export default {
       },
       tableData: [{
         name: '由睿婚礼策划',
-        level: '五星好评',
+        level: '5',
         address: '新华街',
         linkAddress: 'http://www.google.com',
         adminName: '张三',
         phonenumber: '13100000000',
         infofrom: '自动抓取',
         path: '美团',
+        commentCount: '5',
         sp_info: '已经联系过一次',
         fixTime: '2019-12-20 10:00:20'
       }, {
         name: '由睿婚礼策划',
-        level: '五星好评',
+        level: '5',
         address: '新华街',
         linkAddress: 'http://www.google.com',
         adminName: '张三',
         phonenumber: '13100000000',
         infofrom: '自动抓取',
         path: '美团',
+        commentCount: '10',
         sp_info: '已经联系过一次',
         fixTime: '2019-12-20 10:00:20'
       }],
@@ -226,8 +249,12 @@ export default {
       if (this.multipleSelection.length === 0) {
         this.$alert('请勾选商户后再点击群发短信！', '注意', '确定')
       } else {
-        this.$alert('已选中' + this.multipleSelection.length + '个商户进行短信群发', '发送成功', '成功')
+        this.dialogVisible = true
       }
+    },
+    sendMessageAlert () {
+      this.$alert('已选中' + this.multipleSelection.length + '个商户进行短信群发', '发送成功', '成功')
+      this.dialogVisible = false
     },
     getPageDate (pagenumber) {
       console.log(pagenumber)
@@ -260,6 +287,26 @@ export default {
   background-color:  #808080;
   color: #333;
   line-height: 60px;
+}
+.InformationManagement>>>.el-dialog__body {
+  padding: 0px;
+}
+.InformationManagement>>>.el-dialog__header {
+  padding-top: 15px;
+  text-align: left;
+}
+.el-divider--horizontal {
+  margin-top: 0px;
+  margin-bottom: 30px;
+  background-color: #3a4f80;
+}
+.el-textarea>>>.el-textarea__inner{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.el-textarea{
+  margin-bottom: 10px;
 }
 </style>
 <style>

@@ -2,7 +2,7 @@
   <div class="MyInfo">
     <span>个人资料</span>
         <el-divider></el-divider>
-        <el-form :model="formInline" label-width="80px" >
+        <el-form :model="formInline" label-width="80px" class="formInfo">
             <el-form-item label="账号:" >
                 <el-input v-model="formInline.account" placeholder=" " disabled></el-input>
             </el-form-item>
@@ -16,75 +16,172 @@
                 <el-input v-model="formInline.privilegeLevel" placeholder=" " disabled></el-input>
             </el-form-item>
 
-            <el-form-item label="密码:" >
+            <!-- <el-form-item label="密码:" >
                 <el-input v-model="formInline.password" placeholder=" " ></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="IP地址:" >
                 <el-input v-model="formInline.ip" placeholder=" " disabled></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="save_add">保存</el-button>
+                <el-button type="default" @click="modifyPass('ruleForm')">修改密码</el-button>
             </el-form-item>
         </el-form>
+        <el-dialog
+            title="修改密码:"
+            :visible.sync="dialogVisible"
+            width="30%"
+            class="dialog">
+            <el-divider></el-divider>
+            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="ruleForm">
+              <el-form-item label="旧密码" prop="oldPass" >
+                <el-input type="password" v-model="ruleForm.oldPass" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" prop="pass" >
+                <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+              </el-form-item>
+              <el-form-item label="确认密码" prop="checkPass">
+                <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+              <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
+            </span>
+        </el-dialog>
   </div>
 </template>
 <script>
 export default {
   name: 'AddUser',
   data () {
+    const checkpassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else {
+        if (this.ruleForm.checkPass !== '') {
+          this.$refs.ruleForm.validateField('checkPass')
+        }
+        callback()
+      }
+    }
+    const checkpassword2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.ruleForm.pass) {
+        callback(new Error('两次输入的密码不一致!'))
+      } else {
+        callback()
+      }
+    }
+    const checkoldpass = (rule, value, callback) => {
+      if (value !== this.formInline.password) {
+        callback(new Error('旧密码错误'))
+      } else {
+        callback()
+      }
+    }
     return {
       formInline: {
         account: 'admin',
         company: 'xxx',
         telnum: '131200000000',
         privilegeLevel: '管理员',
-        password: 'adminroot',
         ip: '0.0.0.0'
-      }
+      },
+      ruleForm: {
+        oldPass: '',
+        pass: '',
+        checkPass: ''
+      },
+      rules: {
+        oldPass: [{validator: checkoldpass, trigger: 'blur'}],
+        pass: [{ validator: checkpassword, trigger: 'blur' }],
+        checkPass: [{ validator: checkpassword2, trigger: 'blur' }]
+      },
+      dialogVisible: false
     }
   },
   methods: {
     save_add () {
-      this.$confirm('是否保存?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        console.log(this.formInline)
-        this.$message({
-          type: 'success',
-          message: '保存成功!'
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消添加'
-        })
+      // this.$confirm('是否保存?', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // }).then(() => {
+      //   console.log(this.formInline)
+      //   this.$message({
+      //     type: 'success',
+      //     message: '保存成功!'
+      //   })
+      // }).catch(() => {
+      //   this.$message({
+      //     type: 'info',
+      //     message: '取消添加'
+      //   })
+      // })
+      this.dialogVisible = true
+    },
+    modifyPass (formdate) {
+      this.dialogVisible = true
+      if (this.$refs[formdate] !== undefined) {
+        this.$refs[formdate].resetFields()
+      }
+    },
+    submitForm (formdate) {
+      this.$refs[formdate].validate((valid) => {
+        if (valid) {
+          // getDate
+          this.dialogVisible = false
+        } else {
+          return false
+        }
       })
+    },
+    getDate () {
+      // xxx
     }
   }
 }
 </script>
 <style scoped>
-.el-form>>>.el-form-item__content{
+.formInfo>>>.el-form-item__content{
   margin-left: 20px !important;
   float: left;
 }
-.el-form>>>.el-input__inner{
+.formInfo>>>.el-input__inner{
   width: 210%;
   font-weight: bold;
 }
-.el-form>>>.el-form-item__label{
+.formInfo>>>.el-form-item__label{
   margin-left: 470px;
 }
-/*.el-form>>>button.el-button.el-button--button{
-  margin-left: 570px;
-  margin-top:15px;
-  padding-right: 50px;
-  padding-left: 50px;
+.ruleForm>>>.el-form-item__label{
+  margin-left: 0px;
+}
+.ruleForm>>>.el-input__inner{
+  width: 100%;
+  font-weight: bold;
+}
+.ruleForm>>>.el-form-item__label{
+  margin-left: 25px;
+}
+.ruleForm>>>.el-form-item__error{
+  margin-left: 35px;
+}
+.ruleForm>>>.el-input{
+  width: 75%;
+}
+.MyInfo>>>.el-dialog__body {
+  padding: 0px 0px 0px 0px;
+}
+.MyInfo>>>.el-dialog__header {
+  padding-top: 15px;
+  text-align: left;
+}
+/*.dialog>>>.el-divider--horizontal{
+  margin-bottom: 30px!important;
 }*/
-.el-form>>>button.el-button.el-button--primary{
-  margin-left: 895px;
+.formInfo>>>button.el-button.el-button--default{
+  margin-left: 855px;
   margin-top:15px;
   padding-right: 50px;
   padding-left: 50px;

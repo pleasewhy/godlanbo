@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
+import admin from '@/components/admin'
 import Message from '@/components/Message'
 import MessageHistory from '@/components/MessageHistory'
 import InformationManagement from '@/components/InformationManagement'
@@ -51,7 +51,7 @@ const router = new Router({
     {
       path: '/admin',
       name: 'admin',
-      component: Home,
+      component: admin,
       meta: {
         login_required: false
       },

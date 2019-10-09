@@ -15,9 +15,9 @@
             <el-form-item label="用户等级:" >
                 <el-input v-model="formInline.privilegeLevel" placeholder=" " disabled></el-input>
             </el-form-item>
-            <el-form-item label="IP地址:" >
+            <!-- <el-form-item label="IP地址:" >
                 <el-input v-model="formInline.ip" placeholder=" " disabled></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item>
                 <el-button type="default" @click="modifyPass('ruleForm')">修改密码</el-button>
             </el-form-item>
@@ -30,16 +30,14 @@
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="ruleForm">
               <el-form-item label="旧密码" prop="oldPass" >
                 <el-input type="password" v-model="ruleForm.oldPass" autocomplete="off"></el-input>
+                <div class="error" v-show="oldPassCheck">旧密码错误</div>
               </el-form-item>
-              <el-form-item label="密码" prop="pass" >
+              <el-form-item label="新密码" prop="pass" >
                 <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
               </el-form-item>
               <el-form-item label="确认密码" prop="checkPass">
                 <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
               </el-form-item>
-              <!-- <el-form-item>
-                <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-              </el-form-item> -->
             </el-form>
             <span slot="footer" class="dialog-footer">
               <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
@@ -70,29 +68,29 @@ export default {
         callback()
       }
     }
-    const checkoldpass = (rule, value, callback) => {
-      if (value !== this.formInline.password) {
-        callback(new Error('旧密码错误'))
-      } else {
-        callback()
-      }
-    }
+    // const checkoldpass = (rule, value, callback) => {
+    //   if (!value) {
+    //     callback(new Error('旧密码错误'))
+    //   } else {
+    //     callback()
+    //   }
+    // }
     return {
       formInline: {
         account: 'admin',
         company: 'xxx',
         telnum: '131200000000',
         privilegeLevel: '普通用户',
-        password: 'adminroot',
-        ip: '0.0.0.0'
+        password: 'adminroot'
       },
       ruleForm: {
         oldPass: '',
         pass: '',
         checkPass: ''
       },
+      oldPassCheck: false,
       rules: {
-        oldPass: [{validator: checkoldpass, trigger: 'blur'}],
+        // oldPass: [{validator: checkoldpass, trigger: 'blur'}],
         pass: [{ validator: checkpassword, trigger: 'blur' }],
         checkPass: [{ validator: checkpassword2, trigger: 'blur' }]
       },
@@ -123,6 +121,7 @@ export default {
     },
     modifyPass (formdate) {
       this.dialogVisible = true
+      this.oldPassCheck = false
       if (this.$refs[formdate] !== undefined) {
         this.$refs[formdate].resetFields()
       }
@@ -134,6 +133,7 @@ export default {
           this.dialogVisible = false
           this.formInline.password = this.ruleForm.password
         } else {
+          this.oldPassCheck = true
           return false
         }
       })
@@ -165,13 +165,13 @@ export default {
   margin-left: 470px;
 }
 .ruleForm>>>.el-form-item__label{
-  margin-left: 35px;
+  margin-left: 25px;
 }
 .ruleForm>>>.el-form-item__error{
   margin-left: 35px;
 }
 .ruleForm>>>.el-input{
-  width: 70%;
+  width: 75%;
 }
 .formInfo>>>.el-input{
   width: 100%;
@@ -192,6 +192,16 @@ export default {
 .el-divider{
   margin: 12px auto 30px auto;
   background-color: #3a4f80;
+}
+.error{
+  color: #F56C6C;
+  font-size: 12px;
+  line-height: 1;
+  padding-top: 4px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-left: 35px;
 }
 </style>
 <style>

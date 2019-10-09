@@ -3,9 +3,6 @@
     <span>添加用户</span>
         <el-divider></el-divider>
         <el-form :model="formInline" label-width="90px" >
-            <!-- <el-form-item label="账号:" >
-                <el-input v-model="formInline.account" placeholder=" " :disabled="formInline.userNum != '1'"></el-input>
-            </el-form-item> -->
             <el-form-item label="公司:" >
                 <el-input v-model="formInline.company" placeholder=" " ></el-input>
             </el-form-item>
@@ -16,21 +13,18 @@
                 <el-input v-model="formInline.companyBoss" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item label="用户等级:" >
-                <el-select v-model="formInline.privilegeLevel" placeholder="请选择" style="width: 93%;">
-                    <el-option label="普通用户" value="普通用户"></el-option>
-                    <el-option label="铜牌用户" value="铜牌用户"></el-option>
-                    <el-option label="银牌用户" value="银牌用户"></el-option>
-                    <el-option label="金牌用户" value="金牌用户"></el-option>
-                    <el-option label="管理员" value="管理员" v-if="$store.state.loginLevel == 'superRoot'"></el-option>
+                <el-select v-model="formInline.right" placeholder="请选择" style="width: 93%;">
+                    <el-option label="普通用户" value="1"></el-option>
+                    <el-option label="铜牌用户" value="2"></el-option>
+                    <el-option label="银牌用户" value="3"></el-option>
+                    <el-option label="金牌用户" value="4"></el-option>
+                    <el-option label="管理员" value="5" v-if="$store.state.loginLevel == 'superRoot'"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="添加数量:" >
                 <el-input v-model="formInline.userNum" placeholder="1" ></el-input>
             </el-form-item>
 
-            <el-form-item label="密码:" >
-                <el-input v-model="formInline.password" placeholder="12345678" disabled></el-input>
-            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="save_add">添加</el-button>
             </el-form-item>
@@ -43,13 +37,11 @@ export default {
   data () {
     return {
       formInline: {
-        // account: '',
         company: '',
         telnum: '',
         companyBoss: '',
-        privilegeLevel: '',
-        userNum: '1',
-        password: '12345678'
+        right: '',
+        userNum: '1'
       }
     }
   },

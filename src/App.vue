@@ -6,7 +6,7 @@
 
 <script>
 // 导入组件
-import Home from './components/Home'
+import admin from './components/admin'
 import Message from './components/Message'
 import MessageHistory from './components/MessageHistory'
 import InformationManagement from './components/InformationManagement'
@@ -14,7 +14,7 @@ import EditInformation from './components/EditInformation'
 export default {
   name: 'app',
   components: {
-    Home, Message, MessageHistory, InformationManagement, EditInformation
+    admin, Message, MessageHistory, InformationManagement, EditInformation
   }
 }
 

@@ -16,7 +16,7 @@
                 <el-input v-model="formInline.companyBoss" placeholder=" " ></el-input>
             </el-form-item>
             <el-form-item label="用户等级:" >
-                <el-select v-model="formInline.privilegeLevel" placeholder="请选择" style="width: 93%;">
+                <el-select v-model="formInline.right" placeholder="请选择" style="width: 93%;">
                     <el-option label="普通用户" value="普通用户"></el-option>
                     <el-option label="铜牌用户" value="铜牌用户"></el-option>
                     <el-option label="银牌用户" value="银牌用户"></el-option>
@@ -49,7 +49,7 @@ export default {
         company: this.date.company,
         telnum: this.date.telnum,
         companyBoss: this.date.companyBoss,
-        privilegeLevel: this.date.privilegeLevel,
+        right: this.date.right,
         password: this.date.password,
         ip: this.date.ip
       }
