@@ -4,8 +4,8 @@
             <el-form :model="user" :rules="rules" hide-required-asterisk ref="user">
                 <h2>商户管理系统</h2>
                 <el-divider></el-divider>
-                <el-form-item label="账号:" prop="username">
-                    <el-input v-model="user.username" placeholder=" " ></el-input>
+                <el-form-item label="账号:" prop="account">
+                    <el-input v-model="user.account" placeholder=" " ></el-input>
                 </el-form-item>
                 <el-form-item label="密码:" prop="password">
                     <el-input v-model="user.password" placeholder=" " type="password"></el-input>
@@ -24,11 +24,11 @@ export default {
   data () {
     return {
       user: {
-        username: '',
+        account: '',
         password: ''
       },
       rules: {
-        username: [{required: true, message: '请输入账户', trigger: 'blur'}],
+        account: [{required: true, message: '请输入账户', trigger: 'blur'}],
         password: [{required: true, message: '请输入密码', trigger: 'blur'}]
       }
     }
@@ -38,7 +38,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$axios.post('/api/check_account', this.user).then(res => {
-            this.$store.commit('InitializationLoginLevel', res.data.loginInfo)
+            console.log(res)
+            this.$store.commit('InitializationLoginLevel', res.data.right)
             this.$router.replace({
               path: '/admin'
             })

@@ -8,7 +8,8 @@ const state = {
   EditJudge: false,
   AddJudge: false,
   token: false,
-  loginLevel: 'superRoot'
+  loginLevel: 'superRoot',
+  automaticGrabState: false
 }
 const mutations = {
   FixEditJudge (state) {
@@ -39,6 +40,9 @@ const mutations = {
   },
   InitializationLoginLevel (state, loginLevel) {
     state.loginLevel = loginLevel
+  },
+  InitializationAutomaticGrabState (state, nowState) {
+    state.automaticGrabState = nowState
   }
 }
 

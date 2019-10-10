@@ -36,7 +36,7 @@
       </el-form-item>
     </el-form>
 
-      <el-table  ref="multipleTable" :data="tableData"  height="610" @selection-change="handleSelectionChange" stripe>
+      <el-table  ref="multipleTable" :data="tableData"  height="610" stripe>
         <el-table-column prop="name" label="商户名称" >
         </el-table-column>
         <!-- <el-table-column prop="level" label="质量评级" >

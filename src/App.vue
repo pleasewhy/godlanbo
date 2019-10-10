@@ -6,16 +6,16 @@
 
 <script>
 // 导入组件
-import admin from './components/admin'
-import Message from './components/Message'
-import MessageHistory from './components/MessageHistory'
-import InformationManagement from './components/InformationManagement'
-import EditInformation from './components/EditInformation'
+// import admin from './components/admin'
+// import Message from './components/Message'
+// import MessageHistory from './components/MessageHistory'
+// import InformationManagement from './components/InformationManagement'
+// import EditInformation from './components/EditInformation'
 export default {
-  name: 'app',
-  components: {
-    admin, Message, MessageHistory, InformationManagement, EditInformation
-  }
+  name: 'app'
+  // components: {
+  //   admin, Message, MessageHistory, InformationManagement, EditInformation
+  // }
 }
 
 </script>

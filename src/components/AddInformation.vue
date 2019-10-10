@@ -3,24 +3,24 @@
         <span>新增商户信息</span>
         <el-divider></el-divider>
 
-        <el-form :model="formInline" label-width="80px">
-            <el-form-item label="商户名称:" >
-                <el-input v-model="formInline.name" placeholder=" " :disabled="judgeShowInput"></el-input>
+        <el-form :model="formInline" label-width="80px" :rules="rules" ref="addInfoForm" hide-required-asterisk>
+            <el-form-item label="商户名称:" prop="store_name">
+                <el-input v-model="formInline.store_name" placeholder=" " :disabled="judgeShowInput"></el-input>
             </el-form-item>
-            <el-form-item label="质量评级:" >
-                <el-input v-model="formInline.level" placeholder=" " :disabled="judgeShowInput"></el-input>
+            <el-form-item label="质量评级:" prop="score">
+                <el-input v-model="formInline.score" placeholder=" " :disabled="judgeShowInput"></el-input>
             </el-form-item>
-            <el-form-item label=" 地址: " >
-                <el-input v-model="formInline.address" placeholder=" " :disabled="judgeShowInput"></el-input>
+            <el-form-item label=" 地址: " prop="store_address">
+                <el-input v-model="formInline.store_address" placeholder=" " :disabled="judgeShowInput"></el-input>
             </el-form-item>
-            <el-form-item label=" 链接: " >
-                <el-input v-model="formInline.linkAddress" placeholder=" " :disabled="judgeShowInput"></el-input>
+            <el-form-item label=" 链接: " prop="web_link">
+                <el-input v-model="formInline.web_link" placeholder=" " :disabled="judgeShowInput"></el-input>
             </el-form-item>
-            <el-form-item label="联系人:" >
+            <el-form-item label="联系人:" prop="adminName">
                 <el-input v-model="formInline.adminName" placeholder=" " :disabled="judgeShowInput"></el-input>
             </el-form-item>
-            <el-form-item label="电话:" >
-                <el-input v-model="formInline.phonenumber" placeholder=" " :disabled="judgeShowInput"></el-input>
+            <el-form-item label="电话:" prop="phone_number">
+                <el-input v-model="formInline.phone_number" placeholder=" " :disabled="judgeShowInput"></el-input>
             </el-form-item>
             <el-form-item label="信息来源:" >
                 <el-select v-model="formInline.infofrom" placeholder="请选择" style="width: 93%;">
@@ -28,23 +28,23 @@
                     <el-option label="手动生成" value="手动生成"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="渠道:" >
-                <el-select v-model="formInline.path" placeholder="请选择" :disabled="automaticGrabState" style="width: 93%;">
+            <el-form-item label="渠道:" prop="web">
+                <el-select v-model="formInline.web" placeholder="请选择" :disabled="$store.state.automaticGrabState&&formInline.infofrom != '手动生成'" style="width: 93%;">
                     <el-option label="美团" value="美团"></el-option>
                     <el-option label="大众点评" value="大众点评"></el-option>
                     <el-option label="全部" value="全部"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="备注:" >
-                <el-input v-model="formInline.sp_info" placeholder=" " :disabled="judgeShowInput"></el-input>
+                <el-input v-model="formInline.remark" placeholder=" " :disabled="judgeShowInput"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="button" @click="save_add" :disabled="automaticGrabState">添加</el-button>
+                <el-button type="button" @click="save_add('addInfoForm')" :disabled="$store.state.automaticGrabState&&formInline.infofrom != '手动生成'">添加</el-button>
                 <el-button  @click="cancel" >取消</el-button>
             </el-form-item>
         </el-form>
-        <div class="autoText" v-if="automaticGrabState">数据抓取中<i class="el-icon-loading"></i></div>
-        <el-progress :percentage="percentageNum" :format="format" :stroke-width="14" v-if="automaticGrabState"></el-progress>
+        <div class="autoText" v-if="$store.state.automaticGrabState">数据抓取中<i class="el-icon-loading"></i></div>
+        <el-progress :percentage="percentageNum" :format="format" :stroke-width="14" v-if="$store.state.automaticGrabState"></el-progress>
     </div>
 </template>
 <script>
@@ -53,44 +53,68 @@ export default {
   data () {
     return {
       formInline: {
-        name: '',
-        level: '',
-        address: '',
-        linkAddress: '',
+        store_name: '',
+        score: '',
+        store_address: '',
+        web_link: '',
         adminName: '',
-        phonenumber: '',
+        comment_num: '0',
+        phone_number: '',
         infofrom: '手动生成',
-        path: '',
-        sp_info: '',
-        fixTime: ''
+        web: '',
+        remark: '',
+        time: ''
       },
-      automaticGrabState: false,
+      rules: {
+        store_name: [{required: true, message: '此项不能为空'}],
+        score: [{required: true, message: '此项不能为空'}],
+        store_address: [{required: true, message: '此项不能为空'}],
+        web_link: [{required: true, message: '此项不能为空'}],
+        adminName: [{required: true, message: '此项不能为空'}],
+        phone_number: [{required: true, message: '此项不能为空'}],
+        web: [{required: true, message: '此项不能为空'}]
+      },
+      // automaticGrabState: false,
       percentageNum: 50
     }
   },
   methods: {
-    save_add () {
+    test () {
+      this.percentageNum += 10
+    },
+    save_add (formdate) {
       if (this.formInline.infofrom === '手动生成') {
-        this.$confirm('是否添加?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$emit('save_add', this.formInline)
-          this.$message({
-            type: 'success',
-            message: '添加成功!'
-          })
-          this.$store.commit('FixAddJudge')
-          this.$store.commit('FixMainJudge')
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消保存'
-          })
+        this.$refs[formdate].validate((valid) => {
+          if (valid) {
+            this.$confirm('是否添加?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              this.$emit('save_add', this.formInline)
+              this.$axios.post('/api/add_store_info', this.formInline).then(res => {
+                console.log(res)
+                // this.$store.commit('InitializationLoginLevel', res.data.right)
+                this.$message({
+                  type: 'success',
+                  message: '添加成功!'
+                })
+                this.$store.commit('FixAddJudge')
+                this.$store.commit('FixMainJudge')
+              }).catch(err => { alert('添加失败'); console.log(err) })
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '取消保存'
+              })
+            })
+          } else {
+            return false
+          }
         })
       } else if (this.formInline.infofrom === '自动抓取') {
-        this.automaticGrabState = true
+        // this.automaticGrabState = true
+        this.$store.commit('InitializationAutomaticGrabState', true)
       }
     },
     format (percentage) {
@@ -99,11 +123,30 @@ export default {
     cancel () {
       this.$store.commit('FixAddJudge')
       this.$store.commit('FixMainJudge')
+    },
+    getDate () {
+      // get percentageNum
     }
+  },
+  created () {
+    // this.automaticGrabState = this.$store.state.automaticGrabState
+    this.getDate()
   },
   computed: {
     judgeShowInput: function () {
-      return (this.formInline.infofrom === '自动抓取' || this.automaticGrabState) && this.formInline.infofrom !== '手动生成'
+      return (this.formInline.infofrom === '自动抓取' || this.$store.state.automaticGrabState) && this.formInline.infofrom !== '手动生成'
+    }
+  },
+  watch: {
+    percentageNum: function () {
+      if (this.percentageNum === 100) {
+        this.$alert('自动抓取信息已完成', '注意', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$store.commit('InitializationAutomaticGrabState', false)
+          }
+        })
+      }
     }
   }
 }
@@ -143,7 +186,6 @@ export default {
 </style>
 <style>
 .el-main{
-  /*padding: 12px;*/
   padding-top: 12px;
 }
 .autoText{

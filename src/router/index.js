@@ -118,21 +118,20 @@ const router = new Router({
   ],
   mode: 'history'
 })
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.login_required) {
-//     next();
-//   } else {
-//     if(to.path=='/Login') {
-//       next();
-//     } else {
-//      let token = localStorage.getItem('Authorization');
-//      console.log(token)
-//      if (token === null || token === undefined) {
-//       next('/Login');
-//     } else {
-//       next();
-//     }
-//   }
-// }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.meta.login_required) {
+    next()
+  } else {
+    if (to.path === '/Login') {
+      next()
+    } else {
+      let token = localStorage.getItem('Authorization')
+      if (token === null || token === undefined) {
+        next('/Login')
+      } else {
+        next()
+      }
+    }
+  }
+})
 export default router

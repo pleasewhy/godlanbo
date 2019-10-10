@@ -52,11 +52,17 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        console.log(this.formInline)
-        this.$message({
-          type: 'success',
-          message: '添加成功!'
-        })
+        this.$axios.post('/api/add_user', this.formInline)
+          .then(response => {
+            console.log(response)
+            this.$message({
+              type: 'success',
+              message: '添加成功!'
+            })
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
       }).catch(() => {
         this.$message({
           type: 'info',

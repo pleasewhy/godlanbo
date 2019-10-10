@@ -35,6 +35,7 @@
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="ruleForm">
               <el-form-item label="旧密码" prop="oldPass" >
                 <el-input type="password" v-model="ruleForm.oldPass" autocomplete="off"></el-input>
+                <div class="error" v-show="oldPassCheck">旧密码错误</div>
               </el-form-item>
               <el-form-item label="密码" prop="pass" >
                 <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
@@ -72,13 +73,13 @@ export default {
         callback()
       }
     }
-    const checkoldpass = (rule, value, callback) => {
-      if (value !== this.formInline.password) {
-        callback(new Error('旧密码错误'))
-      } else {
-        callback()
-      }
-    }
+    // const checkoldpass = (rule, value, callback) => {
+    //   if (value !== this.formInline.password) {
+    //     callback(new Error('旧密码错误'))
+    //   } else {
+    //     callback()
+    //   }
+    // }
     return {
       formInline: {
         account: 'admin',
@@ -87,13 +88,14 @@ export default {
         privilegeLevel: '管理员',
         ip: '0.0.0.0'
       },
+      oldPassCheck: false,
       ruleForm: {
         oldPass: '',
         pass: '',
         checkPass: ''
       },
       rules: {
-        oldPass: [{validator: checkoldpass, trigger: 'blur'}],
+        // oldPass: [{validator: checkoldpass, trigger: 'blur'}],
         pass: [{ validator: checkpassword, trigger: 'blur' }],
         checkPass: [{ validator: checkpassword2, trigger: 'blur' }]
       },
@@ -122,6 +124,7 @@ export default {
     },
     modifyPass (formdate) {
       this.dialogVisible = true
+      this.oldPassCheck = false
       if (this.$refs[formdate] !== undefined) {
         this.$refs[formdate].resetFields()
       }
@@ -132,6 +135,7 @@ export default {
           // getDate
           this.dialogVisible = false
         } else {
+          this.oldPassCheck = true
           return false
         }
       })
@@ -177,9 +181,16 @@ export default {
   padding-top: 15px;
   text-align: left;
 }
-/*.dialog>>>.el-divider--horizontal{
-  margin-bottom: 30px!important;
-}*/
+.error{
+  color: #F56C6C;
+  font-size: 12px;
+  line-height: 1;
+  padding-top: 4px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-left: 35px;
+}
 .formInfo>>>button.el-button.el-button--default{
   margin-left: 855px;
   margin-top:15px;

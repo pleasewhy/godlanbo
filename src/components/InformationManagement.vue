@@ -41,31 +41,31 @@
           type="selection"
           width="55">
         </el-table-column>
-        <el-table-column prop="name" label="商户名称" width="120">
+        <el-table-column prop="store_name" label="商户名称" width="120">
         </el-table-column>
-        <el-table-column prop="level" label="质量评级" width="80">
+        <el-table-column prop="score" label="质量评级" width="80">
         </el-table-column>
-        <el-table-column prop="address" label="地址" width="120">
+        <el-table-column prop="store_address" label="地址" width="120">
         </el-table-column>
         <el-table-column label="链接">
           <template slot-scope="scope">
-            <a :href="''+tableData[scope.$index].linkAddress" target="_blank">{{tableData[scope.$index].linkAddress}}</a>
+            <a :href="''+tableData[scope.$index].web_link" target="_blank">{{tableData[scope.$index].web_link}}</a>
           </template>
 
         </el-table-column>
         <el-table-column prop="adminName" label="联系人">
         </el-table-column>
-        <el-table-column prop="phonenumber" label="电话">
+        <el-table-column prop="phone_number" label="电话">
         </el-table-column>
         <el-table-column prop="infofrom" label="信息来源">
         </el-table-column>
-        <el-table-column prop="path" label="渠道">
+        <el-table-column prop="web" label="渠道">
         </el-table-column>
-        <el-table-column prop="commentCount" label="评论数" width="80">
+        <el-table-column prop="comment_num" label="评论数" width="80">
         </el-table-column>
-        <el-table-column prop="sp_info" label="备注">
+        <el-table-column prop="remark" label="备注">
         </el-table-column>
-        <el-table-column prop="fixTime" label="更新时间">
+        <el-table-column prop="time" label="更新时间">
         </el-table-column>
         <el-table-column  label="操作">
           <template slot-scope="scope">
@@ -142,31 +142,33 @@ export default {
         infofrom: [{required: true, message: '不能为空', trigger: 'blur'}],
         path: [{required: true, message: '不能为空', trigger: 'blur'}]
       },
-      tableData: [{
-        name: '由睿婚礼策划',
-        level: '5',
-        address: '新华街',
-        linkAddress: 'http://www.google.com',
-        adminName: '张三',
-        phonenumber: '13100000000',
-        infofrom: '自动抓取',
-        path: '美团',
-        commentCount: '5',
-        sp_info: '已经联系过一次',
-        fixTime: '2019-12-20 10:00:20'
-      }, {
-        name: '由睿婚礼策划',
-        level: '5',
-        address: '新华街',
-        linkAddress: 'http://www.google.com',
-        adminName: '张三',
-        phonenumber: '13100000000',
-        infofrom: '自动抓取',
-        path: '美团',
-        commentCount: '10',
-        sp_info: '已经联系过一次',
-        fixTime: '2019-12-20 10:00:20'
-      }],
+      tableData: [],
+
+      // tableData: [{
+      //   name: '由睿婚礼策划',
+      //   level: '5',
+      //   address: '新华街',
+      //   linkAddress: 'http://www.google.com',
+      //   adminName: '张三',
+      //   phonenumber: '13100000000',
+      //   infofrom: '自动抓取',
+      //   path: '美团',
+      //   commentCount: '5',
+      //   sp_info: '已经联系过一次',
+      //   fixTime: '2019-12-20 10:00:20'
+      // }, {
+      //   name: '由睿婚礼策划',
+      //   level: '5',
+      //   address: '新华街',
+      //   linkAddress: 'http://www.google.com',
+      //   adminName: '张三',
+      //   phonenumber: '13100000000',
+      //   infofrom: '自动抓取',
+      //   path: '美团',
+      //   commentCount: '10',
+      //   sp_info: '已经联系过一次',
+      //   fixTime: '2019-12-20 10:00:20'
+      // }],
       multipleSelection: []
     }
   },
@@ -208,11 +210,11 @@ export default {
       // 传递给后端，重新获取数据
     },
     updateform (obj, index) {
-      obj.fixTime = this.getDateTime()
+      obj.time = this.getDateTime()
       this.tableData[index] = obj
     },
     addInformationToform (obj) {
-      obj.fixTime = this.getDateTime()
+      obj.time = this.getDateTime()
       this.tableData[this.tableData.length] = obj
     },
     handleEdit (index, row) {
@@ -257,14 +259,13 @@ export default {
       this.dialogVisible = false
     },
     getPageDate (pagenumber) {
-      console.log(pagenumber)
-      // this.$axios.post('xxx', pagenumber)
-      //   .then(response => {
-
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error)
-      //   })
+      this.$axios.post('/api/get_store_info', {pageNumber: pagenumber})
+        .then(response => {
+          this.tableData = response.data.info
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
   },
   mounted () {

@@ -2,7 +2,10 @@
   <div class="admin">
     <el-container>
       <el-header height="100px">
-        <h1 style="margin-left: 20px">后台管理系统</h1>
+        <div class="title_head">
+          <h1 style="margin-left: 20px;margin-top: 20px">后台管理系统</h1>
+          <el-button class="loginOut" @click="loginOut">登出</el-button>
+        </div>
       </el-header>
 
       <el-container>
@@ -51,6 +54,20 @@ export default {
       if (this.$route.path !== '/admin/' + RouterPath) {
         this.$router.push('/admin/' + RouterPath)
       }
+    },
+    loginOut () {
+      this.$confirm('是否退出登录?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        localStorage.clear()
+        this.$message({
+          type: 'success',
+          message: '退出登录!'
+        })
+        this.$router.push('/Login')
+      }).catch(() => {})
     }
   },
   computed: {
@@ -101,9 +118,25 @@ span{
   margin-bottom: 0px;
   background-color: #333;
 }
+h1{
+  display: inline;
+}
+.el-button:focus, .el-button:hover{
+  color:#DCDFE6;
+  background-color: #767c88;
+  border-color: rgb(80, 88, 95);
+}
 </style>
 <style>
-
+.title_head{
+  margin-top:20px;
+}
+.loginOut{
+  margin-left: 1600px;
+  background-color: rgb(80, 88, 95);
+  color: #f5f7fa;
+  border: 1px solid #363737;
+}
 body{
   margin: 0px;
 }

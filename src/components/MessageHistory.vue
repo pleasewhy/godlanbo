@@ -150,7 +150,13 @@ export default {
     },
     handleCurrentPage (val) {
       // xxx
+    },
+    getDate () {
+      // xxx
     }
+  },
+  created () {
+    this.getDate()
   }
 }
 </script>
