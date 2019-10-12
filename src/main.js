@@ -37,6 +37,7 @@ axios.interceptors.response.use(
     } else {
       store.commit('changeLogin', response.headers.authorization)
     }
+    store.commit('InitializationLoading')
     return response
   },
   error => {
@@ -45,6 +46,7 @@ axios.interceptors.response.use(
     } else if (error.response.status === 500) {
       alert('服务器出错')
     }
+    store.commit('InitializationLoading')
     return Promise.reject(error.response.data)
   })
 

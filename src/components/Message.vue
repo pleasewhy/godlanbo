@@ -42,9 +42,7 @@
             title="消息内容:"
             :visible.sync="dialogVisible"
             width="30%">
-            <!-- <el-button @click="test(scope.$index, scope.row)">test</el-button> -->
             <el-divider></el-divider>
-            <!-- <p>{{ tableData[scope.$index].MessageInfo }}</p> -->
             <p>{{ dialogText }}</p>
             <span slot="footer" class="dialog-footer">
               <el-button type="primary" @click="dialogVisible = false">确定</el-button>
@@ -118,6 +116,16 @@ export default {
         })
       })
     },
+    getDate (pagenumber) {
+      this.$axios.post('/api/get_store_info', {pageNumber: pagenumber})
+        .then(response => {
+          console.log(response)
+          // this.tableData = response.data.info
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
     handleCurrentPage (val) {
       // xxx
     },
@@ -132,11 +140,21 @@ export default {
       this.$refs[formdate].validate((valid) => {
         if (valid) {
           // xxx
+          // this.$axios.post('/api/get_store_info', this.formInline)
+          //   .then(response => {
+          //     this.tableData = response.data.info
+          //   })
+          //   .catch(function (error) {
+          //     console.log(error)
+          //   })
         } else {
           return false
         }
       })
     }
+  },
+  created () {
+    this.getDate(1)
   }
 }
 </script>

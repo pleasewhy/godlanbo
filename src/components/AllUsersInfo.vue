@@ -27,7 +27,7 @@
     </el-dropdown>
     <el-input v-model="searchKeyWord" placeholder="用户相关信息"></el-input>
     <el-button type="primary" @click="searchInfo">查询</el-button>
-    <el-table ref="multipleTable" :data="usersDate"  height="610" @selection-change="handleSelectionChange" stripe>
+    <el-table ref="multipleTable" :data="usersDate"  height="580" @selection-change="handleSelectionChange" stripe>
       <el-table-column
           type="selection"
           width="55">
@@ -43,11 +43,13 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            @click="handleEdit(scope.$index, scope.row)"
+            :disabled="scope.row.right === '管理员'||$store.state.loginLevel !== 'superRoot'">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.$index, scope.row)"
+            :disabled="scope.row.right === '管理员'||$store.state.loginLevel !== 'superRoot'">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -86,56 +88,15 @@ export default {
   },
   created () {
     this.index = '1'
-    this.getDate()
   },
   watch: {
     index: function (val) {
       switch (this.index) {
         case '1':
-          this.usersDate = [{
-            account: '13152526525',
-            company: '上海企业',
-            telnum: '123354564',
-            companyBoss: 'xxx',
-            right: '银牌用户',
-            password: '12345678',
-            ip: '127.0.0.1'
-          }, {
-            account: '13152526525',
-            company: '深圳企业',
-            telnum: '123354564',
-            companyBoss: 'xxx',
-            right: '银牌用户',
-            password: '12345678',
-            ip: '127.0.0.1'
-          }, {
-            account: '13152526525',
-            company: '内江企业',
-            telnum: '123354564',
-            companyBoss: 'xxx',
-            right: '银牌用户',
-            password: '12345678',
-            ip: '127.0.0.1'
-          }, {
-            account: '13152526525',
-            company: '大连企业',
-            telnum: '123354564',
-            companyBoss: 'xxx',
-            right: '银牌用户',
-            password: '12345678',
-            ip: '127.0.0.1'
-          }]
+          this.getDate(1)
           break
         case '2':
-          this.usersDate = [{
-            account: '13152526525',
-            company: '上海企业',
-            telnum: '123354564',
-            companyBoss: 'aaa',
-            right: '普通用户',
-            password: '12345678',
-            ip: '127.0.0.1'
-          }]
+          this.getDate(1)
           break
       }
     }
@@ -148,8 +109,14 @@ export default {
     handleCurrentPage (val) {
       // 123
     },
-    getDate () {
-      // xxx
+    getDate (pagenumber) {
+      this.$axios.post('/api/get_user_info', {pageNumber: pagenumber})
+        .then(response => {
+          this.usersDate = response.data.user_info
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
     },
     searchInfo () {
       // submit this.searchInfo
@@ -239,11 +206,18 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.usersDate.splice(index, 1)
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        })
+        this.$axios.post('/api/del_user', row)
+          .then(response => {
+            console.log(response)
+            this.usersDate.splice(index, 1)
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
       }).catch(() => {
         this.$message({
           type: 'info',

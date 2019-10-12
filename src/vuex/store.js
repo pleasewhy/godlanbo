@@ -7,9 +7,10 @@ const state = {
   MainJudge: true,
   EditJudge: false,
   AddJudge: false,
-  token: false,
+  token: true,
   loginLevel: 'superRoot',
-  automaticGrabState: false
+  automaticGrabState: false,
+  loading: true
 }
 const mutations = {
   FixEditJudge (state) {
@@ -43,6 +44,12 @@ const mutations = {
   },
   InitializationAutomaticGrabState (state, nowState) {
     state.automaticGrabState = nowState
+  },
+  InitializationLoading (state) {
+    state.loading = false
+  },
+  ResetLoading (state) {
+    state.loading = true
   }
 }
 

@@ -1,4 +1,5 @@
 <template>
+  <div class="login">
     <el-container>
         <el-main>
             <el-form :model="user" :rules="rules" hide-required-asterisk ref="user">
@@ -11,12 +12,12 @@
                     <el-input v-model="user.password" placeholder=" " type="password"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="login('user')">登录</el-button>
+                    <el-button type="primary" @click="login('user')" clss="login_button">登录</el-button>
                 </el-form-item>
             </el-form>
         </el-main>
     </el-container>
-
+  </div>
 </template>
 <script>
 export default {
@@ -30,31 +31,29 @@ export default {
       rules: {
         account: [{required: true, message: '请输入账户', trigger: 'blur'}],
         password: [{required: true, message: '请输入密码', trigger: 'blur'}]
-      }
+      },
+      tempLoading: null
     }
   },
   methods: {
     login (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.tempLoading = this.$loading({target: document.querySelector('.el-form')})
           this.$axios.post('/api/check_account', this.user).then(res => {
-            console.log(res)
             this.$store.commit('InitializationLoginLevel', res.data.right)
             this.$router.replace({
               path: '/admin'
             })
-          }).catch(err => { alert('登陆失败'); console.log(err) })
+          }).catch(err => {
+            alert('登陆失败')
+            console.log(err)
+            this.tempLoading.close()
+          })
         } else {
           return false
         }
       })
-    },
-    test () {
-      this.$axios.get('/api/get_all_info')
-        .then(response => { console.log(response) })
-        .catch(function (error) {
-          console.log(error)
-        })
     }
   },
   mounted () {

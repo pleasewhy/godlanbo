@@ -11,7 +11,7 @@
       <el-container>
 
         <el-aside width="200px"  ref="asideHeight">
-          <el-menu  :default-active="defaultActive" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+          <el-menu  :default-active="defaultActive" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b"  @open="updateDivider" @close="updateDivider">
             <el-menu-item index="/admin/InformationManagement" @click="toSomeRouter('InformationManagement')">商户信息管理</el-menu-item>
             <el-menu-item index="/admin/Message" @click="toSomeRouter('Message')">短信群发管理</el-menu-item>
             <el-menu-item index="/admin/MessageHistory" @click="toSomeRouter('MessageHistory')">短信群发历史</el-menu-item>
@@ -23,7 +23,7 @@
               <el-menu-item index="/admin/AddUser" @click="toSomeRouter('AddUser')">添加用户</el-menu-item>
               <el-menu-item index="/admin/MyInfo" @click="toSomeRouter('MyInfo')">个人资料</el-menu-item>
             </el-submenu>
-            <el-divider></el-divider>
+            <el-divider v-if="isDivider"></el-divider>
             <!-- <el-menu-item index="/admin/UsersInfoAndOperation" @click="toUsersInfoAndOperation">用户</el-menu-item> -->
             <el-menu-item index="/admin/RecycleBin" @click="toSomeRouter('RecycleBin')">回收站</el-menu-item>
           </el-menu>
@@ -41,7 +41,8 @@ export default {
   name: 'admin',
   data () {
     return {
-      bodyHeight: ''
+      bodyHeight: '',
+      isDivider: false
     }
   },
   watch: {
@@ -54,6 +55,9 @@ export default {
       if (this.$route.path !== '/admin/' + RouterPath) {
         this.$router.push('/admin/' + RouterPath)
       }
+    },
+    updateDivider (index, indexPath) {
+      this.isDivider = !this.isDivider
     },
     loginOut () {
       this.$confirm('是否退出登录?', '提示', {

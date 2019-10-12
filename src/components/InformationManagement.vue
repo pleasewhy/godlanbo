@@ -9,14 +9,14 @@
           <el-select v-model="formInline.infofrom" placeholder="请选择">
             <el-option label="自动抓取" value="自动抓取"></el-option>
             <el-option label="手动生成" value="手动生成"></el-option>
-            <el-option label="全部" value="全部"></el-option>
+            <el-option label="全部" value="all"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="渠道" label-width="100px" prop="path">
           <el-select v-model="formInline.path" placeholder="请选择">
             <el-option label="美团" value="美团"></el-option>
             <el-option label="大众点评" value="大众点评"></el-option>
-            <el-option label="全部" value="全部"></el-option>
+            <el-option label="全部" value="all"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="更新时间" label-width="100px">
@@ -25,7 +25,7 @@
           </el-col>
           <el-col :span="2">&nbsp;——</el-col>
           <el-col :span="11">
-            <el-time-picker placeholder="选择时间" v-model="formInline.date2" style="width: 100%;"></el-time-picker>
+            <el-date-picker type="date" placeholder="选择日期" v-model="formInline.date2" style="width: 100%;"></el-date-picker>
           </el-col>
         </el-form-item>
       <el-form-item>
@@ -36,7 +36,14 @@
       </el-form-item>
     </el-form>
 
-      <el-table id="out-table" ref="multipleTable" :data="tableData"  height="610" @selection-change="handleSelectionChange" stripe>
+      <el-table
+        id="out-table"
+        ref="multipleTable"
+        :data="tableData"
+        height="590"
+        @selection-change="handleSelectionChange"
+        stripe
+        >
         <el-table-column
           type="selection"
           width="55">
@@ -81,9 +88,11 @@
       </el-table>
       <div class="block">
         <el-pagination
+          ref="pagination"
           @current-change="handleCurrentPage"
           layout="prev, pager, next, jumper"
-          :page-size="20"
+          :current-page.sync="resetPage"
+          :page-size="2"
           :total="totalInfoNum">
         </el-pagination>
       </div>
@@ -117,8 +126,6 @@
 <script>
 import EditInformation from './EditInformation.vue'
 import AddInformation from './AddInformation.vue'
-// import FileSaver from 'file-saver'
-// import XLSX from 'xlsx'
 export default {
   name: 'InformationManagement',
   components: {
@@ -128,7 +135,7 @@ export default {
     return {
       tableDateRowIndex: 0,
       dialogVisible: false,
-      totalInfoNum: 1000,
+      totalInfoNum: 1,
       textarea: '',
       formInline: {
         keyword: '',
@@ -137,38 +144,13 @@ export default {
         date1: '',
         date2: ''
       },
+      resetPage: 1,
       rules: {
         keyword: [{required: true, message: '不能为空', trigger: 'blur'}],
         infofrom: [{required: true, message: '不能为空', trigger: 'blur'}],
         path: [{required: true, message: '不能为空', trigger: 'blur'}]
       },
       tableData: [],
-
-      // tableData: [{
-      //   name: '由睿婚礼策划',
-      //   level: '5',
-      //   address: '新华街',
-      //   linkAddress: 'http://www.google.com',
-      //   adminName: '张三',
-      //   phonenumber: '13100000000',
-      //   infofrom: '自动抓取',
-      //   path: '美团',
-      //   commentCount: '5',
-      //   sp_info: '已经联系过一次',
-      //   fixTime: '2019-12-20 10:00:20'
-      // }, {
-      //   name: '由睿婚礼策划',
-      //   level: '5',
-      //   address: '新华街',
-      //   linkAddress: 'http://www.google.com',
-      //   adminName: '张三',
-      //   phonenumber: '13100000000',
-      //   infofrom: '自动抓取',
-      //   path: '美团',
-      //   commentCount: '10',
-      //   sp_info: '已经联系过一次',
-      //   fixTime: '2019-12-20 10:00:20'
-      // }],
       multipleSelection: []
     }
   },
@@ -199,23 +181,29 @@ export default {
       // 提交数据到后端查询，接受返回数据
       this.$refs[formdate].validate((valid) => {
         if (valid) {
-          console.log(1)
+          this.$axios.post('/api/search', this.formInline)
+            .then(response => {
+              this.tableData = response.data.info
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+          this.resetPage = 1
         } else {
           return false
         }
       })
     },
     handleCurrentPage (val) {
-      console.log(val)
-      // 传递给后端，重新获取数据
+      this.getDate(val)
     },
     updateform (obj, index) {
       obj.time = this.getDateTime()
-      this.tableData[index] = obj
+      // this.tableData[index] = obj
     },
     addInformationToform (obj) {
       obj.time = this.getDateTime()
-      this.tableData[this.tableData.length] = obj
+      // this.tableData[this.tableData.length] = obj
     },
     handleEdit (index, row) {
       this.tableDateRowIndex = index
@@ -255,13 +243,22 @@ export default {
       }
     },
     sendMessageAlert () {
+      this.$axios.post('/api/get_store_info', this.multipleSelection)
+        .then(response => {
+          console.log(response)
+          // this.tableData = response.data.info
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
       this.$alert('已选中' + this.multipleSelection.length + '个商户进行短信群发', '发送成功', '成功')
       this.dialogVisible = false
     },
-    getPageDate (pagenumber) {
+    getDate (pagenumber) {
       this.$axios.post('/api/get_store_info', {pageNumber: pagenumber})
         .then(response => {
           this.tableData = response.data.info
+          this.totalInfoNum = response.data.totalInfoNum
         })
         .catch(function (error) {
           console.log(error)
@@ -276,7 +273,8 @@ export default {
   },
   created () {
     // getDate 在页面加载前获取数据
-    this.getPageDate(1)
+    // this.$store.commit('ResetLoading')
+    this.getDate(1)
     this.$store.commit('InitializationMainJudge')
     this.$store.commit('InitializationEditJudge')
     this.$store.commit('InitializationAddJudge')
@@ -309,13 +307,14 @@ export default {
 .el-textarea{
   margin-bottom: 10px;
 }
+
 </style>
 <style>
 body{
   margin: 0px;
 }
 .el-form{
-  padding: 10px 20px 10px 20px;
+  padding: 0px 20px 0px 20px;
 }
 .el-table {
   margin: 0px auto;
